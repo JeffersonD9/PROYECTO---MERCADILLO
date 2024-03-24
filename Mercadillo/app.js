@@ -1,5 +1,6 @@
 import express from 'express'
-import routes from './routes/DashBoardUserRoute.js'
+import DashBoard from './routes/DashBoardUserRoute.js'
+import Login from './routes/LoginRoute.js'
 import morgan from 'morgan'
 import {PORT} from './config/config.js'
 
@@ -15,6 +16,7 @@ app.use(express.json())
 
 // Routes
 
-app.use('/MercadilloBucaramanga', routes);
+app.use('/MercadilloBucaramanga', DashBoard, Login);
+
 
 export default app
