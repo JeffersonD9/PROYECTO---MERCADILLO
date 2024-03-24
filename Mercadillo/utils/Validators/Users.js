@@ -1,5 +1,5 @@
 import { check } from "express-validator";
-import {validateResult} from "../Helpers/ValidateHelper.js"
+import { validateResult } from "../Helpers/ValidateHelper.js"
 
 const validateCreate = [
 
@@ -12,5 +12,6 @@ const validateCreate = [
         validateResult (req,res,next)
     }
 ]
+
 
 export {validateCreate}
