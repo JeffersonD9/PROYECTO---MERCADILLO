@@ -39,5 +39,3 @@ async function CreateUser(data){
     }
    
 }
-
-export {CreateUser}

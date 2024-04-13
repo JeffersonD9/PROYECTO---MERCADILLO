@@ -12,6 +12,4 @@ const validateCreate = [
         validateResult (req,res,next)
     }
 ]
-
-
 export {validateCreate}

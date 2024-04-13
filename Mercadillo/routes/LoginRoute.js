@@ -9,7 +9,6 @@ router.get("/Login",(req,res)=>{
 })
 
 router.post("/Registrar", validateCreate, Register ,(req,res)=>{
-    res.send("Registrando")
 })
 
 export default router

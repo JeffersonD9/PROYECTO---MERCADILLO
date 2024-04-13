@@ -1,9 +1,10 @@
-//import {CreateUser} from '../Services/ServicesLogin.js'
 import {PrismaClient} from '@prisma/client'
+import bcrypt from "bcrypt";
+import {CreateAccesToken} from "../JTW/Token.js"
 const prisma = new PrismaClient()
 
 async function AuthUser(req,res){
-
+   
     const data = req.body
     try {
         
@@ -13,20 +14,33 @@ async function AuthUser(req,res){
 }
 
 async function Register(req,res){
-
+  
     const data = req.body
 
-    try {
-         newUser = await prisma.usuario.create({
-   
-               data: data
-          })  
-          res.send("OK")
-          console.log(newUser)  
-       } catch (error) {    
+    try {    
+
+       const passwordHash = await bcrypt.hash(data.Password,10)
+       data.Password = passwordHash; 
+       const newUser = await prisma.usuario.create({ 
+            data: data
+       }) 
+
+        const token = await CreateAccesToken({
+        id: newUser.id,
+        UserName: newUser.UserName
+       })
+       
+        res.cookie('token',token);
+        res.status(201).send({
+            UserName: data.UserName,
+            Email: data.Email,
+            DateCreated: data.DateCreated           
+        });
+       } 
+       catch (error) {    
            
            if(error.code == 'P2002' && error.meta.target.includes('Usuario_UserName_key')){
-            res.status(409).json({
+            res.status(409).send.json({
                    error:{
                        message: `El usuario ${data.UserName} ya existe`,
                        code: 'CONFLICT',
@@ -43,12 +57,7 @@ async function Register(req,res){
                    }
                })
            }else{
-   
-            res.status(500).json({
-                   error:{
-                       message: 'Algo ha salido mal',
-                   }
-               })
+            res.status(500).send("Algo salio mal")
            }
        }
 }
