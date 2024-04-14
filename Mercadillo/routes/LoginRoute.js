@@ -1,7 +1,8 @@
 import { Router } from "express";
 import {Register} from '../controllers/ControllerRegister.js'
-import {Login, LogOut, ProfileSalesman} from '../controllers/ControllerAuthUser.js'
+import {Login, LogOut} from '../controllers/ControllerLogin.js'
 import {validateCreate} from '../MiddleWares/Users.js'
+import {ProfileSalesman} from '../controllers/ControllerAuthSalesman.js'
 import {authRequired} from '../MiddleWares/ValidateToken.js'
 
 const router = Router()

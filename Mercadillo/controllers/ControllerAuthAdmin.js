@@ -5,13 +5,13 @@ const prisma = new PrismaClient()
 
 export async function LoginAdmin(req,res){
 
-    const {Name, Password } = req.body;
+    const {Email, Password } = req.body;
 
     try {
 
-        const userFound = await prisma.admin.findFirst({
+        const userFound = await prisma.admin.findUnique({
             where: {
-                Email: Name
+                Email: Email
             }
         })
         if (!userFound) return res.status(400).json({ message: "Invalidate Credentials" });
