@@ -1,9 +1,23 @@
 import bcrypt from "bcrypt";
 import { CreateAccesToken } from "../Services/CreateToken.js";
 import {PrismaClient} from '@prisma/client'
+import {LoginAdmin} from "../controllers/ControllerAuthAdmin.js"
 const prisma = new PrismaClient()
 
-async function UserExist(req, res) {
+async function Login(req,res){
+    const rol = req.body.id_Rol
+     if(rol == 1){
+
+        LoginVendor(req,res)
+
+     }
+     else if( rol == 2){
+
+        LoginAdmin(req,res)
+     }
+        
+}
+async function LoginVendor(req, res) {
 
     const { Email, Password } = req.body;
 
@@ -28,6 +42,7 @@ async function UserExist(req, res) {
 
     } catch (error) {
         res.status(500).json({ message: error });
+        console.log(error)
     }
 }
 
@@ -40,7 +55,7 @@ async function LogOut(req,res){
     return res.sendStatus(200)
 }
 
-async function Profile(req,res){
+async function ProfileSalesman(req,res){
 
     try {
         const userFound = await prisma.usuario.findUnique({
@@ -57,9 +72,9 @@ async function Profile(req,res){
             Email: userFound.Email
         })
     } catch (error) {
-        
+        res.status(500).json({ message: error });
     }
 }
 
-export{UserExist, LogOut , Profile}
+export{Login, LogOut , ProfileSalesman}
 

@@ -37,7 +37,8 @@ model Roles{
 model Admin{
 
   id Int @id @default(autoincrement())
-  Nombre String
+  Email String @unique
+  Password String
   id_Rol Int
   roles Roles @relation(fields: [id_Rol],references: [id])
 }
