@@ -3,7 +3,7 @@ import { CreateAccesToken } from "../Services/CreateToken.js";
 import {PrismaClient} from '@prisma/client'
 const prisma = new PrismaClient()
 
-async function AuthUser(req, res) {
+async function UserExist(req, res) {
 
     const { Email, Password } = req.body;
 
@@ -60,5 +60,6 @@ async function Profile(req,res){
         
     }
 }
-export{AuthUser, LogOut , Profile}
+
+export{UserExist, LogOut , Profile}
 

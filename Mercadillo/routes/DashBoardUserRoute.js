@@ -1,12 +1,12 @@
 import { Router } from "express";
-import {AuthUser} from '../controllers/ControllerAuthUser.js'
-
+import {Profile} from '../controllers/ControllerAuthUser.js'
+import {authRequired} from '../MiddleWares/ValidateToken.js'
 const router = Router()
 
 router.get('/Inicio',(req,res)=>{
     res.send("Hola Mundo")
 })
 
-router.get('/DashBoard/User/', AuthUser)
+router.get('/Admin',authRequired, Profile)
 
 export default router

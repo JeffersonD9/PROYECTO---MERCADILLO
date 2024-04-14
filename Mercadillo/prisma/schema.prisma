@@ -22,4 +22,22 @@ model Usuario{
     Password String  
     Email  String  @unique
     DateCreated  DateTime @default(now())
+    id_Rol Int
+    roles Roles @relation(fields: [id_Rol],references: [id])
+}
+
+model Roles{
+
+    id Int @id @default(autoincrement())
+    Nombre String
+    usuarios Usuario[]
+    admins Admin[]
+}
+
+model Admin{
+
+  id Int @id @default(autoincrement())
+  Nombre String
+  id_Rol Int
+  roles Roles @relation(fields: [id_Rol],references: [id])
 }

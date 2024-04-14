@@ -12,6 +12,7 @@ async function Register(req,res){
 
        const passwordHash = await bcrypt.hash(data.Password,10)
        data.Password = passwordHash; 
+       data.id_Rol = 1;
        const newUser = await prisma.usuario.create({ 
             data: data
        }) 
@@ -50,6 +51,7 @@ async function Register(req,res){
                })
            }else{
             res.status(500).send("Algo salio mal")
+            console.log(error)
            }
        }
 }
