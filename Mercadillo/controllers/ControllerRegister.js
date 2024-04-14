@@ -1,17 +1,8 @@
 import {PrismaClient} from '@prisma/client'
 import bcrypt from "bcrypt";
-import {CreateAccesToken} from "../JTW/Token.js"
-const prisma = new PrismaClient()
+import {CreateAccesToken} from "../Services/CreateToken.js"
 
-async function AuthUser(req,res){
-   
-    const data = req.body
-    try {
-        
-    } catch (error) {
-        
-    }
-}
+const prisma = new PrismaClient()
 
 async function Register(req,res){
   
@@ -37,10 +28,11 @@ async function Register(req,res){
             DateCreated: data.DateCreated           
         });
        } 
+
        catch (error) {    
            
            if(error.code == 'P2002' && error.meta.target.includes('Usuario_UserName_key')){
-            res.status(409).send.json({
+            res.status(409).json({
                    error:{
                        message: `El usuario ${data.UserName} ya existe`,
                        code: 'CONFLICT',
@@ -62,4 +54,4 @@ async function Register(req,res){
        }
 }
 
-export {AuthUser,Register}
+export {Register}

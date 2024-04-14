@@ -1,14 +1,17 @@
 import { Router } from "express";
-import {Register,AuthUser} from '../controllers/ControllerLogin.js'
-import {validateCreate} from '../utils/Validators/Users.js'
+import {Register} from '../controllers/ControllerRegister.js'
+import {AuthUser, LogOut, Profile} from '../controllers/ControllerAuthUser.js'
+import {validateCreate} from '../utils/Users.js'
+import {authRequired} from '../MiddleWares/ValidateToken.js'
 
 const router = Router()
 
-router.get("/Login",(req,res)=>{
-    res.send("Hola soy el Login")
-})
+router.post("/Login", AuthUser)
 
-router.post("/Registrar", validateCreate, Register ,(req,res)=>{
-})
+router.post("/Registrar", validateCreate, Register)
+
+router.post("/LogOut",LogOut)
+
+router.get("/Profile", authRequired, Profile)
 
 export default router
