@@ -24,6 +24,7 @@ model Usuario{
     DateCreated  DateTime @default(now())
     id_Rol Int
     roles Roles @relation(fields: [id_Rol],references: [id])
+    productos Productos []
 }
 
 model Roles{
@@ -41,4 +42,25 @@ model Admin{
   Password String
   id_Rol Int
   roles Roles @relation(fields: [id_Rol],references: [id])
+}
+
+model Productos{
+
+  id Int @id @default(autoincrement())
+  Nombre String @unique
+  Descripcion String
+  Precio String 
+  id_Categoria Int
+  id_Usuario Int
+  categorias Categorias @relation(fields: [id_Categoria],references: [id])  
+  usuarios Usuario  @relation(fields: [id_Usuario],references: [id])  
+  
+}
+
+model Categorias{
+
+  id Int @id @default(autoincrement())
+  Nombre String @unique
+  productos Productos[]
+
 }
