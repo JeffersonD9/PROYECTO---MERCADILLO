@@ -23,7 +23,6 @@ app.set("views", path.join(__dirname, 'views'));  //Identificar la carpeta views
 app.use(express.static(path.join(__dirname, "public"))); //Identificar la carpeta public
 
 
-
 app.set('port', PORT)
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json())
