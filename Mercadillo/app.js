@@ -8,14 +8,13 @@ import {PORT} from './config.js'
 import cors from "cors";
 import cookieParser from 'cookie-parser'
 
-
-
 const app = express()
 app.use(cors());
 
 app.use(morgan('dev'));
 
 //Path
+
 let  __dirname = path.dirname(new URL(import.meta.url).pathname);
 __dirname = __dirname.slice(1);
 app.set('view engine', 'ejs');
