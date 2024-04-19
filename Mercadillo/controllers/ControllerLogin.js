@@ -10,9 +10,10 @@ export async function Login(req,res){
         LoginSalesman(req,res)
 
      }
-     else if( rol == 2){
+     else if(rol == 2){
 
         LoginAdmin(req,res)
+        
      }
         
 }
