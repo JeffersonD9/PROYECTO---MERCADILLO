@@ -1,6 +1,5 @@
 import {LoginAdmin} from "./ControllerAuthAdmin.js"
 import {LoginSalesman} from "./ControllerAuthSalesman.js"
-
 import {PrismaClient} from '@prisma/client'
 const prisma = new PrismaClient()
 
@@ -33,7 +32,6 @@ export async function Login(req,res){
     } catch (error) {
         console.log("Error :   " + error)
     }   
-
 }
 
 export async function LogOut(req,res){
@@ -45,10 +43,13 @@ export async function LogOut(req,res){
     return res.sendStatus(200)
 }
 
+
+
 export  function Ingresar(req,res){
     res.render("login");
 }
 export  function IngresarFormRegistroUsuario(req,res){
     res.render("registrarUsuario");
 }
+
 

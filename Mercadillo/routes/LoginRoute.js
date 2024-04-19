@@ -6,7 +6,6 @@ import {ProfileSalesman} from '../controllers/ControllerAuthSalesman.js'
 import {authRequired} from '../MiddleWares/ValidateToken.js'
 
 const router = Router()
-
 router.get("/Login", Ingresar)
 router.post("/Login", Login)
 
