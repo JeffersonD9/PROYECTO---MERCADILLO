@@ -31,9 +31,13 @@ export async function LoginSalesman(req, res) {
         res.status(500).json({ message: error });
         console.log(error)
     }
+<<<<<<< HEAD
 
 }
 
+=======
+}
+>>>>>>> IvanDario
 export async function ProfileSalesman(req,res){
 
     try {

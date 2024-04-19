@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient()
 
 export async function LoginAdmin(req,res){
+<<<<<<< HEAD
 
     const {Email, Password } = req.body;
 
@@ -12,11 +13,25 @@ export async function LoginAdmin(req,res){
         const userFound = await prisma.admin.findUnique({
             where: {
                 Email: Email
+=======
+    const {email, password } = req.body;
+    const passwordHash = await bcrypt.hash(password,10)
+    console.log(req.body )
+    try {
+        const userFound = await prisma.admin.findUnique({
+            where: {
+                Email: email
+>>>>>>> IvanDario
             }
         })
         if (!userFound) return res.status(400).json({ message: "Invalidate Credentials" });
 
+<<<<<<< HEAD
         const ismatch = await bcrypt.compare(Password, userFound.Password);
+=======
+        const ismatch = await bcrypt.compare(password, userFound.Password);
+        console.log(userFound.Password)
+>>>>>>> IvanDario
         if (!ismatch) return res.status(400).json({ message: "Invalidate Credentials" });
 
         const role = userFound.id_Rol
@@ -29,9 +44,15 @@ export async function LoginAdmin(req,res){
         });
 
     } catch (error) {
+<<<<<<< HEAD
 
         res.status(500).json({ message: error });
         console.log(error)
+=======
+        console.log("Error " +  error)
+        res.status(500).json({ message: error });
+        
+>>>>>>> IvanDario
     }
 }
 export async function ProfileAdmin(req,res){
