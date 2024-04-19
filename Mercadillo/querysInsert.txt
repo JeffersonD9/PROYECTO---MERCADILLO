@@ -1,4 +1,0 @@
-INSERT INTO mercadillo.admin (Email,id_Rol,Password) VALUES ('Admin',2,'$2b$10$wtgMcfRV731y5UMrCckd6.3SMf9CsPHwmNCYMXxoy4HpGsV6DDOuO');
-INSERT INTO mercadillo.admin (Email,id_Rol,Password) VALUES ('Admin2',2,'$2b$10$BKwRDsUeQr5P.UlnSAPeLeE4wbey4KxWR1zi3SZwpXal/uomkV2F.');
-INSERT INTO mercadillo.admin (Email,id_Rol,Password) VALUES ('Admin3',2,'$2b$10$SSeVuwo/J/AP93EnpB19E.m1danduD8qI4pu9AjeU1GqbdQRdEqum')
-

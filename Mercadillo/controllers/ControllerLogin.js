@@ -1,37 +1,20 @@
 import {LoginAdmin} from "./ControllerAuthAdmin.js"
 import {LoginSalesman} from "./ControllerAuthSalesman.js"
-import {PrismaClient} from '@prisma/client'
-const prisma = new PrismaClient()
 
 export async function Login(req,res){
-    try {
-        const { email } = req.body; // dato del email
 
-        // Realizar la consulta filtrada
-        const resultados = await prisma.admin.findMany({
-          where: {
-            Email: email,
-          },
-        });
-    
-        //res.json(resultados); 
-        //console.log(resultados[0].id_Rol);
+    const rol = req.body.id_Rol
 
-        const rol = resultados[0].id_Rol;
-        console.log( " *********** " + rol)
-        if(rol == 1){
-           LoginSalesman(req,res)
-        }
-        else if( rol == 2){
-            console.log(" rol Administrador")
-            LoginAdmin(req,res)
-        }else{
-           console.log("Usuario no registrado")
-        }
+     if(rol == 1){
 
-    } catch (error) {
-        console.log("Error :   " + error)
-    }   
+        LoginSalesman(req,res)
+
+     }
+     else if( rol == 2){
+
+        LoginAdmin(req,res)
+     }
+        
 }
 
 export async function LogOut(req,res){
@@ -42,14 +25,3 @@ export async function LogOut(req,res){
 
     return res.sendStatus(200)
 }
-
-
-
-export  function Ingresar(req,res){
-    res.render("login");
-}
-export  function IngresarFormRegistroUsuario(req,res){
-    res.render("registrarUsuario");
-}
-
-
