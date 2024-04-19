@@ -1,23 +1,6 @@
 import {LoginAdmin} from "./ControllerAuthAdmin.js"
 import {LoginSalesman} from "./ControllerAuthSalesman.js"
-<<<<<<< HEAD
 
-export async function Login(req,res){
-
-    const rol = req.body.id_Rol
-
-     if(rol == 1){
-
-        LoginSalesman(req,res)
-
-     }
-     else if(rol == 2){
-
-        LoginAdmin(req,res)
-        
-     }
-        
-=======
 import {PrismaClient} from '@prisma/client'
 const prisma = new PrismaClient()
 
@@ -50,7 +33,7 @@ export async function Login(req,res){
     } catch (error) {
         console.log("Error :   " + error)
     }   
->>>>>>> IvanDario
+
 }
 
 export async function LogOut(req,res){
@@ -62,10 +45,6 @@ export async function LogOut(req,res){
     return res.sendStatus(200)
 }
 
-
-<<<<<<< HEAD
-=======
-
 export  function Ingresar(req,res){
     res.render("login");
 }
@@ -73,5 +52,3 @@ export  function IngresarFormRegistroUsuario(req,res){
     res.render("registrarUsuario");
 }
 
-
->>>>>>> IvanDario

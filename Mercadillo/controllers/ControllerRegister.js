@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-import {CreateAccesToken} from "../Services/CreateToken.js"
-import{EncryptPassword,CreateUser} from "../Services/ServicesUser.js"
-
-async function Register(req,res){
-  
-=======
 import {PrismaClient} from '@prisma/client'
 import bcrypt from "bcrypt";
 import {CreateAccesToken} from "../Services/CreateToken.js"
@@ -13,21 +6,10 @@ const prisma = new PrismaClient()
 
 async function Register(req,res){
     
->>>>>>> IvanDario
     const data = req.body
 
     try {    
 
-<<<<<<< HEAD
-       data.Password = await EncryptPassword(data)
-       data.id_Rol = 1;
-
-       const newUser = await CreateUser(data)
-
-       const token = await CreateAccesToken({
-       id: newUser.id,
-       UserName: newUser.UserName          })
-=======
        const passwordHash = await bcrypt.hash(data.Password,10)
        data.Password = passwordHash; 
        data.id_Rol = 1;
@@ -39,20 +21,13 @@ async function Register(req,res){
         id: newUser.id,
         UserName: newUser.UserName
        })
->>>>>>> IvanDario
        
         res.cookie('token',token);
         res.status(201).send({
             UserName: data.UserName,
-<<<<<<< HEAD
-            Email: data.Email,     
-        });
-
-=======
             Email: data.Email,
             DateCreated: data.DateCreated           
         });
->>>>>>> IvanDario
        } 
 
        catch (error) {    
