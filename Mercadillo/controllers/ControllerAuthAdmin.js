@@ -14,10 +14,10 @@ export async function LoginAdmin(req,res){
                 Email: Email
             }
         })
-        if (!userFound) return res.status(400).json({ message: "Invalidate Credentials" });
-
-        const ismatch = await bcrypt.compare(Password, userFound.Password);
-        if (!ismatch) return res.status(400).json({ message: "Invalidate Credentials" });
+        if (!userFound) return res.status(400).json({ message: "Invalidate Credentials - usuario desconocido" });
+        const isMatch = await bcrypt.compare(Password, userFound.Password);
+        
+        if (!isMatch) return res.status(400).json({ message: "Invalid Credentials: contraseña incorrecta" });
 
         const role = userFound.id_Rol
 
