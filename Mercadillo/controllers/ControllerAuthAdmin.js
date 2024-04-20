@@ -4,19 +4,19 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient()
 
 export async function LoginAdmin(req,res){
-    const {email, password } = req.body;
-    const passwordHash = await bcrypt.hash(password,10)
-    console.log(req.body )
+    
+    const {Email, Password } = req.body;
+
     try {
+
         const userFound = await prisma.admin.findUnique({
             where: {
-                Email: email
+                Email: Email
             }
         })
         if (!userFound) return res.status(400).json({ message: "Invalidate Credentials" });
 
-        const ismatch = await bcrypt.compare(password, userFound.Password);
-        console.log(userFound.Password)
+        const ismatch = await bcrypt.compare(Password, userFound.Password);
         if (!ismatch) return res.status(400).json({ message: "Invalidate Credentials" });
 
         const role = userFound.id_Rol
