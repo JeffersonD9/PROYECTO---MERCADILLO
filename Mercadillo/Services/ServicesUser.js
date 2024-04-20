@@ -10,8 +10,8 @@ export async function CreateUser(data){
    return userCreate
 }
 
-export async function EncryptPassword(data){
+export async function EncryptPassword(password){
 
-    const passwordHash = await bcrypt.hash(data.Password,10)
+    const passwordHash = await bcrypt.hash(password,10)
     return passwordHash
 }

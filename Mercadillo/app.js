@@ -2,7 +2,7 @@ import express from 'express'
 import Login from './routes/LoginRoute.js'
 import Task from './routes/TaskRoutes.js'
 import morgan from 'morgan'
-import path from "path";
+import Salesman from './routes/DashBoardSalesman.js'
 import Admin from './routes/DashBoardAdmin.js'
 import {PORT} from './config.js'
 import cors from "cors";
@@ -32,7 +32,7 @@ app.get("/MercadilloBucaramanga",(req,res)=>{
 
 // Routes
 
-app.use('/MercadilloBucaramanga', Login ,Admin,Task)
+app.use('/MercadilloBucaramanga', Login ,Admin,Salesman)
 //app.use('/MercarilloBucaramanga',Admin)
 
 export default app

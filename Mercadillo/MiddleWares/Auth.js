@@ -1,13 +1,14 @@
-import passport from 'passport'
-import { Strategy } from 'passport-local'
+import { Strategy } from "passport-local";
 
-passport.use('SignUp', new Strategy({
-    usernameField: 'Email',
-    passwordField: 'Password'
-}, async (Email,Password,done)=>{
+export const Login = new Strategy({
+    usernameField: "Email",
+    passwordField: "Password"
+
+},async (email,password,done)=>{
     try {
         
     } catch (error) {
         
     }
-}))
+}
+)
