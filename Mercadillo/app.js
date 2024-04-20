@@ -7,6 +7,7 @@ import Admin from './routes/DashBoardAdmin.js'
 import {PORT} from './config.js'
 import cors from "cors";
 import cookieParser from 'cookie-parser'
+import { Strategy } from 'passport-local'
 
 
 
@@ -34,7 +35,7 @@ app.get("/MercadilloBucaramanga",(req,res)=>{
 
 // Routes
 
-app.use('/MercadilloBucaramanga', Login ,Task)
-//app.use('/MercarilloBucaramanga/DashBoard',Admin)
+app.use('/MercadilloBucaramanga', Login ,Admin,Task)
+//app.use('/MercarilloBucaramanga',Admin)
 
 export default app
