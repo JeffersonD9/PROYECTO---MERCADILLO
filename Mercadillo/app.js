@@ -8,8 +8,6 @@ import {PORT} from './config.js'
 import cors from "cors";
 import cookieParser from 'cookie-parser'
 
-
-
 const app = express()
 app.use(cors());
 
@@ -21,7 +19,6 @@ __dirname = __dirname.slice(1);
 app.set('view engine', 'ejs');
 app.set("views", path.join(__dirname, 'views'));  //Identificar la carpeta views
 app.use(express.static(path.join(__dirname, "public"))); //Identificar la carpeta public
-
 
 
 app.set('port', PORT)
