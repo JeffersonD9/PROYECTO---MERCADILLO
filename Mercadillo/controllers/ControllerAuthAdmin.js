@@ -33,14 +33,15 @@ export async function LoginAdmin(req,res){
         
     }
 }
+
 export async function ProfileAdmin(req,res){
 
     try {
         const userFound = await prisma.admin.findUnique({
             where: {
                 id: req.user.id,
-                Email: req.user.Email,
-                id: req.user.id_Rol
+                Email: req.body.Email,
+                id_Rol: req.user.role
             }
         })
         if(!userFound) return res.send(400).json({ message: "User not Found"})
@@ -50,6 +51,7 @@ export async function ProfileAdmin(req,res){
         })
     } catch (error) {
         res.status(500).json({ message: error });
+        console.log(error)
     }
 
 }
