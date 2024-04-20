@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient()
 
 export async function LoginAdmin(req,res){
-
     const {Email, Password } = req.body;
 
     try {
@@ -29,9 +28,9 @@ export async function LoginAdmin(req,res){
         });
 
     } catch (error) {
-
+        console.log("Error " +  error)
         res.status(500).json({ message: error });
-        console.log(error)
+        
     }
 }
 export async function ProfileAdmin(req,res){

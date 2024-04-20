@@ -1,27 +1,33 @@
+import {PrismaClient} from '@prisma/client'
+import bcrypt from "bcrypt";
 import {CreateAccesToken} from "../Services/CreateToken.js"
-import{EncryptPassword,CreateUser} from "../Services/ServicesUser.js"
+
+const prisma = new PrismaClient()
 
 async function Register(req,res){
-  
+    
     const data = req.body
 
     try {    
 
-       data.Password = await EncryptPassword(data)
+       const passwordHash = await bcrypt.hash(data.Password,10)
+       data.Password = passwordHash; 
        data.id_Rol = 1;
+       const newUser = await prisma.usuario.create({ 
+            data: data
+       }) 
 
-       const newUser = await CreateUser(data)
-
-       const token = await CreateAccesToken({
-       id: newUser.id,
-       UserName: newUser.UserName          })
+        const token = await CreateAccesToken({
+        id: newUser.id,
+        UserName: newUser.UserName
+       })
        
         res.cookie('token',token);
         res.status(201).send({
             UserName: data.UserName,
-            Email: data.Email,     
+            Email: data.Email,
+            DateCreated: data.DateCreated           
         });
-
        } 
 
        catch (error) {    

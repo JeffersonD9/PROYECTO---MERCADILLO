@@ -43,7 +43,6 @@ export async function ProfileSalesman(req,res){
         if(!userFound) return res.send(400).json({ message: "User not Found"})
 
         return  res.json({
-
             id: userFound.id,
             UserName: userFound.UserName,
             Email: userFound.Email
