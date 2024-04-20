@@ -5,6 +5,7 @@ import morgan from 'morgan'
 import Admin from './routes/DashBoardAdmin.js'
 import {PORT} from './config.js'
 import cookieParser from 'cookie-parser'
+import { Strategy } from 'passport-local'
 
 const app = express()
 
@@ -20,7 +21,7 @@ app.use(cookieParser())
 
 // Routes
 
-app.use('/MercadilloBucaramanga', Login ,Task)
-//app.use('/MercarilloBucaramanga/DashBoard',Admin)
+app.use('/MercadilloBucaramanga', Login ,Admin,Task)
+//app.use('/MercarilloBucaramanga',Admin)
 
 export default app
