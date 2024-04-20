@@ -41,7 +41,7 @@ export async function ProfileAdmin(req,res){
             where: {
                 id: req.user.id,
                 Email: req.user.Email,
-                id: req.user.id_Rol
+                id: req.user.role
             }
         })
         if(!userFound) return res.send(400).json({ message: "User not Found"})
