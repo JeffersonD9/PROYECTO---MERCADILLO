@@ -2,6 +2,7 @@ import { Router } from "express";
 import {Register} from '../controllers/ControllerRegister.js'
 import {Login, LogOut} from '../controllers/ControllerLogin.js'
 import {validateCreate} from '../Helpers/ValidateUsers.js'
+import {Ingresar,IngresarFormRegistroUsuario} from '../controllers/ControllerLogin.js'
 
 const router = Router()
 router.get("/Login", Ingresar)

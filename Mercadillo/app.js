@@ -4,6 +4,7 @@ import Task from './routes/TaskRoutes.js'
 import morgan from 'morgan'
 import Salesman from './routes/DashBoardSalesman.js'
 import Admin from './routes/DashBoardAdmin.js'
+import path from 'path'
 import {PORT} from './config.js'
 import cors from "cors";
 import cookieParser from 'cookie-parser'
