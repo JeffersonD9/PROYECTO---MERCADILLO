@@ -49,6 +49,7 @@ model Productos{
   id Int @id @default(autoincrement())
   Nombre String @unique
   Descripcion String
+  Disponibilidad Boolean
   Precio String 
   id_Categoria Int
   id_Usuario Int

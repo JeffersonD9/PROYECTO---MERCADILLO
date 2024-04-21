@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient()
 
 export async function LoginAdmin(req,res){
-    
+
     const {Email, Password } = req.body;
 
     try {
@@ -14,10 +14,10 @@ export async function LoginAdmin(req,res){
                 Email: Email
             }
         })
-        if (!userFound) return res.status(400).json({ message: "Invalidate Credentials" });
-
-        const ismatch = await bcrypt.compare(Password, userFound.Password);
-        if (!ismatch) return res.status(400).json({ message: "Invalidate Credentials" });
+        if (!userFound) return res.status(400).json({ message: "Invalidate Credentials - usuario desconocido" });
+        const isMatch = await bcrypt.compare(Password, userFound.Password);
+        
+        if (!isMatch) return res.status(400).json({ message: "Invalid Credentials: contraseña incorrecta" });
 
         const role = userFound.id_Rol
 
@@ -29,9 +29,9 @@ export async function LoginAdmin(req,res){
         });
 
     } catch (error) {
-        console.log("Error " +  error)
+
         res.status(500).json({ message: error });
-        
+        console.log(error)
     }
 }
 export async function ProfileAdmin(req,res){
@@ -40,7 +40,8 @@ export async function ProfileAdmin(req,res){
         const userFound = await prisma.admin.findUnique({
             where: {
                 id: req.user.id,
-                Email: req.user.Email
+                Email: req.user.Email,
+                id: req.user.role
             }
         })
         if(!userFound) return res.send(400).json({ message: "User not Found"})

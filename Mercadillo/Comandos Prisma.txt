@@ -1,7 +1,0 @@
-prisma generate --schema=./Mercadillo/models/Usuario.prisma
-
-para generar la conexion del schema de la db
-
-npx prisma generate migrate dev -para migracion de db
-
-prisma migrate dev -para mandar la migracion a la db
