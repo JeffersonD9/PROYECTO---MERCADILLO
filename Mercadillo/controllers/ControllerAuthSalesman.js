@@ -38,7 +38,6 @@ export async function ProfileSalesman(req,res){
         const userFound = await prisma.usuario.findUnique({
             where: {
                 id: req.user.id,
-                Email: req.body.Email,
                 id_Rol: req.user.role
             }
         })

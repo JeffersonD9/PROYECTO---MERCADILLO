@@ -40,7 +40,6 @@ export async function ProfileAdmin(req,res){
         const userFound = await prisma.admin.findUnique({
             where: {
                 id: req.user.id,
-                Email: req.user.Email,
                 id: req.user.role
             }
         })
