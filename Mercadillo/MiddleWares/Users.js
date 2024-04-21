@@ -1,5 +1,5 @@
 import { check } from "express-validator";
-import { validateResult } from "../utils/ValidateHelper.js"
+import { validateResult } from "../Helpers/ValidateRequest.js"
 
 const validateCreate = [
 
