@@ -1,9 +1,5 @@
 import { check } from "express-validator";
-<<<<<<< HEAD:Mercadillo/MiddleWares/Users.js
-import { validateResult } from "../Helpers/ValidateRequest.js"
-=======
 import { validateResult } from "./ValidateRequest.js"
->>>>>>> JeffersonDev:Mercadillo/Helpers/ValidateUsers.js
 
 const validateCreate = [
 
