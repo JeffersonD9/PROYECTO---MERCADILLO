@@ -35,6 +35,7 @@ export async function LoginSalesman(req, res) {
 export async function ProfileSalesman(req,res){
 
     try {
+        console.log(req.user)
         const userFound = await prisma.usuario.findUnique({
             where: {
                 id: req.user.id,
@@ -45,14 +46,13 @@ export async function ProfileSalesman(req,res){
         if(!userFound) return res.status(400).json({ message: "User not Found"})
 
         return  res.json({
-
             id: userFound.id,
             UserName: userFound.UserName,
             Email: userFound.Email
         })
 
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        //res.status(500).json({ message: error.message });
         console.log(error)
     }
 }
