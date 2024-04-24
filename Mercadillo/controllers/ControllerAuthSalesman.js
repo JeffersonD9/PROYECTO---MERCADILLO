@@ -25,6 +25,7 @@ export async function LoginSalesman(req, res) {
         res.cookie('token', token);
         res.status(201).send({
             UserName: userFound.UserName,
+            redirect:"Usuario",
         });
 
     } catch (error) {
@@ -45,11 +46,16 @@ export async function ProfileSalesman(req,res){
         })
         if(!userFound) return res.status(400).json({ message: "User not Found"})
 
-        return  res.json({
+        return  res.render("vendedor", {
             id: userFound.id,
             UserName: userFound.UserName,
-            Email: userFound.Email
-        })
+            Email: userFound.Email,
+        
+        /*res.json({
+            id: userFound.id,
+            UserName: userFound.UserName,
+            Email: userFound.Email*/
+        });
 
     } catch (error) {
         //res.status(500).json({ message: error.message });
