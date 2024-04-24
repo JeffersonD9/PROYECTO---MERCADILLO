@@ -1,23 +1,25 @@
 import {LoginAdmin} from "./ControllerAuthAdmin.js"
 import {LoginSalesman} from "./ControllerAuthSalesman.js"
 import {PrismaClient} from '@prisma/client'
+import { SearchUser } from "../Services/ServicesUser.js"
 const prisma = new PrismaClient()
 
 export async function Login(req,res){
     try {
-        const rol = req.body.id_Rol
-    
-         if(rol == 1){
+        const {Email} = req.body
+        const role = await SearchUser(Email)
+        console.log(role, " Email")
+
+         if(role == 1){
     
             LoginSalesman(req,res)  
          }
-         else if( rol == 2){
-    
+         else if( role == 2){
             LoginAdmin(req,res)
          }
         else{
             
-           console.log("Usuario no registrado")
+            res.status(404).json({message: "No existe ninguno"})
         }
 
     } catch (error) {
@@ -32,7 +34,7 @@ export async function LogOut(req,res){
         expires : new Date(0)
     })
 
-    return res.sendStatus(200)
+    return res.status(200).json({redirect: "/MercadilloBucaramanga"})
 }
 
 
@@ -41,6 +43,10 @@ export  function Ingresar(req,res){
 }
 export  function IngresarFormRegistroUsuario(req,res){
     res.render("registrarUsuario");
+}
+
+export  function indexAdmin(req,res){
+    res.render("administrador");
 }
 
 
