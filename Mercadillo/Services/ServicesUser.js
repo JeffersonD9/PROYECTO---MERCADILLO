@@ -18,31 +18,26 @@ export async function EncryptPassword(password){
 
 export async function SearchUser(email){
 
-    try {
-        
+    try {       
         const adminFound = await prisma.admin.findUnique({
             where:{
                 Email:email
             }
         })
     
-        const salesFound = await prisma.admin.findUnique({
+        const salesFound = await prisma.usuario.findUnique({
             where:{
                 Email:email
             }
         })
 
         if (adminFound) {
-
-            return {
-                user:adminFound
-            }
+            console.log("es Admin")
+            return adminFound.id_Rol
 
         } else if (salesFound) {
-
-            return {
-                user:salesFound
-            }
+            console.log("es Vendedor")
+            return salesFound.id_Rol
 
         } else {
 
