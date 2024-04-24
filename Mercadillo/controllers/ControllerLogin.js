@@ -1,24 +1,30 @@
 import {LoginAdmin} from "./ControllerAuthAdmin.js"
 import {LoginSalesman} from "./ControllerAuthSalesman.js"
 import {PrismaClient} from '@prisma/client'
+import { SearchUser } from "../Services/ServicesUser.js"
 const prisma = new PrismaClient()
 
 export async function Login(req,res){
     try {
-        const rol = req.body.id_Rol
+        
+        const {Email} = req.body
+        const user = await SearchUser(Email)
+        if(user){
+            const role = user.user.id_Rol
+            if(role == 1 ){
     
-         if(rol == 1){
-    
-            LoginSalesman(req,res)  
-         }
-         else if( rol == 2){
-    
-            LoginAdmin(req,res)
-         }
-        else{
-            
-           console.log("Usuario no registrado")
+                LoginSalesman(req,res)  
+             }
+             else if( role == 2){
+        
+                LoginAdmin(req,res)
+             }
+            else{
+                
+               console.log("Usuario no registrado")
+            }
         }
+         
 
     } catch (error) {
 
