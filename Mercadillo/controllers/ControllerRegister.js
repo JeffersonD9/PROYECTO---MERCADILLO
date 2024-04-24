@@ -26,7 +26,8 @@ async function Register(req,res){
         res.status(201).send({
             UserName: data.UserName,
             Email: data.Email,
-            DateCreated: data.DateCreated           
+            DateCreated: data.DateCreated,
+            redirect: "Usuario"               
         });
        } 
 
