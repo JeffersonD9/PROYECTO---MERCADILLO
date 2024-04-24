@@ -25,6 +25,7 @@ export async function LoginAdmin(req,res){
         res.cookie('token', token);
         res.status(201).send({
             Email: userFound.Email,
+            redirect:"Admin"
         });
 
     } catch (error) {
@@ -45,10 +46,11 @@ export async function ProfileAdmin(req,res){
             }
         })
         if(!userFound) return res.send(400).json({ message: "User not Found"})
-
-        return res.status(200).json({
+        
+        return res.render("administrador",{UserName: userFound.Email,  loginPath: "/MercadilloBucaramanga/Admin"})
+       /* return res.status(200).json({
             message: "User found"
-        })
+        })*/
     } catch (error) {
         res.status(500).json({ message: error });
         console.log(error)
