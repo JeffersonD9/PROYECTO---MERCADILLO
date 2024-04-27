@@ -1,59 +1,42 @@
-import {PrismaClient} from '@prisma/client'
 import { CreateAccesToken } from "../Services/CreateToken.js";
-import bcrypt from "bcrypt";
-const prisma = new PrismaClient()
+import { SearchAdmin,ValidateSessionAdmin} from "../Services/ServicesAdmin.js";
 
-export async function LoginAdmin(req,res){
-    const {Email, Password } = req.body;
+export async function LoginAdmin(req, res) {
 
-    try {
+  const { Email, Password } = req.body;
 
-        const userFound = await prisma.admin.findUnique({
-            where: {
-                Email: Email
-            }
-        })
-        if (!userFound) return res.status(400).json({ message: "Invalidate Credentials" });
+  try {
 
-        const ismatch = await bcrypt.compare(Password, userFound.Password);
-        if (!ismatch) return res.status(400).json({ message: "Invalidate Credentials" });
+    const userfound = await SearchAdmin(Email, Password, res);
+    const role = userfound.id_Rol;
+    const token = await CreateAccesToken({ id: userfound.id, role: role });
 
-        const role = userFound.id_Rol
+    res.cookie("token", token);
+    res.status(201).send({
+      Email: userfound.Email,
+      redirect: "Admin",
 
-        const token = await CreateAccesToken({ id: userFound.id, role: role});
-
-        res.cookie('token', token);
-        res.status(201).send({
-            Email: userFound.Email,
-            redirect:"Admin"
-        });
-
-    } catch (error) {
-        console.log("Error " +  error)
-        res.status(500).json({ message: error });
-        
-    }
+    });
+  } catch (error) {
+    console.log("Error " + error);
+    res.status(500).json({ message: error });
+  }
 }
 
-export async function ProfileAdmin(req,res){
+export async function ProfileAdmin(req, res) {
+  try {
 
-    try {
-        const userFound = await prisma.admin.findUnique({
-            where: {
-                id: req.user.id,
-                Email: req.body.Email,
-                id_Rol: req.user.role
-            }
-        })
-        if(!userFound) return res.send(400).json({ message: "User not Found"})
-        
-        return res.render("administrador",{UserName: userFound.Email,  loginPath: "/MercadilloBucaramanga/Admin"})
-       /* return res.status(200).json({
+    const userFound = ValidateSessionAdmin(req, res);
+
+    return res.render("administrador", {
+      UserName: userFound.Email,
+      loginPath: "/MercadilloBucaramanga/Admin",
+    });
+    /* return res.status(200).json({
             message: "User found"
         })*/
-    } catch (error) {
-        res.status(500).json({ message: error });
-        console.log(error)
-    }
-
+  } catch (error) {
+    res.status(500).json({ message: error });
+    console.log(error);
+  }
 }
