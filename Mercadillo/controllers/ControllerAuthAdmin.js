@@ -32,9 +32,7 @@ export async function ProfileAdmin(req, res) {
       UserName: userFound.Email,
       loginPath: "/MercadilloBucaramanga/Admin",
     });
-    /* return res.status(200).json({
-            message: "User found"
-        })*/
+
   } catch (error) {
     res.status(500).json({ message: error });
     console.log(error);
