@@ -10,7 +10,6 @@ export async function CreateUser(data){
    return userCreate
 }
 
-
 export async function EncryptPassword(password){
 
     const passwordHash = await bcrypt.hash(password,10)
@@ -49,4 +48,9 @@ export async function SearchUser(email){
         console.error("Error al buscar usuario:", error);
         throw error;
     }
+
+}
+
+export async function SearchSalesman(){
+    
 }

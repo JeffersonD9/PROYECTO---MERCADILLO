@@ -5,10 +5,11 @@ import {
 } from "../Services/ServicesAdmin.js";
 
 export async function LoginAdmin(req, res) {
+  
   const { Email, Password } = req.body;
-
   try {
-    const userfound = await SearchAdmin(Email, Password, res);
+
+    const userfound = await SearchAdmin(Email, Password);
     const role = userfound.id_Rol;
     const token = await CreateAccesToken({ id: userfound.id, role: role });
 
@@ -18,23 +19,20 @@ export async function LoginAdmin(req, res) {
       redirect: "Admin",
     });
   } catch (error) {
-    console.log("Error " + error);
     res.status(500).json({ message: error });
   }
 }
 
 export async function ProfileAdmin(req, res) {
   try {
-    const userFound = ValidateSessionAdmin(req, res);
+    const userFound = ValidateSessionAdmin(req);
 
     return res.render("administrador", {
       UserName: userFound.Email,
       loginPath: "/MercadilloBucaramanga/Admin",
     });
-    
   } catch (error) {
     res.status(500).json({ message: error });
-    console.log(error);
   }
 }
 
