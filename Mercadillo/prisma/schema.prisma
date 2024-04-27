@@ -35,6 +35,15 @@ model Roles{
     admins Admin[]
 }
 
+model Catalogo{
+
+   id Int @id @default(autoincrement())
+   Nombre String
+   Descripcion String
+   id_Cat Int
+   categorias Categorias @relation(fields: [id_Cat],references: [id])  
+}
+
 model Admin{
 
   id Int @id @default(autoincrement())
@@ -48,14 +57,15 @@ model Productos{
 
   id Int @id @default(autoincrement())
   Nombre String @unique
-  Descripcion String
+  Descripcion String?
   Disponibilidad Boolean
   Precio String 
   id_Categoria Int
   id_Usuario Int
+  id_Catagolo Int
   categorias Categorias @relation(fields: [id_Categoria],references: [id])  
   usuarios Usuario  @relation(fields: [id_Usuario],references: [id])  
-  
+
 }
 
 model Categorias{
@@ -63,5 +73,5 @@ model Categorias{
   id Int @id @default(autoincrement())
   Nombre String @unique
   productos Productos[]
-
+  catalogos Catalogo[]
 }

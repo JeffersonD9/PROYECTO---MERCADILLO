@@ -1,16 +1,17 @@
 import {LoginAdmin} from "./ControllerAuthAdmin.js"
 import {LoginSalesman} from "./ControllerAuthSalesman.js"
-
+import {SearchUser} from "../Services/ServicesUser.js"
 export async function Login(req,res){
 
-    const rol = req.body.id_Rol
+    const {Email} = req.body
+        const role = await SearchUser(Email)
 
-     if(rol == 1){
+     if(role == 1){
 
         LoginSalesman(req,res)
 
      }
-     else if( rol == 2){
+     else if( role == 2){
 
         LoginAdmin(req,res)
      }
