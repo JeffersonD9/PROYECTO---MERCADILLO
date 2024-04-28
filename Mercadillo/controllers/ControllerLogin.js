@@ -22,3 +22,11 @@ export async function LogOut(req, res) {
 
   return res.sendStatus(200);
 }
+
+export  function Ingresar(req,res){
+  res.render("login");
+}
+
+export  function IngresarFormRegistroUsuario(req,res){
+  res.render("registrarUsuario");
+}
