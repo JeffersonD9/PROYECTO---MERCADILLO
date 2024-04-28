@@ -9,48 +9,30 @@ export async function CreateUser(data){
    }) 
    return userCreate
 }
+export async function SearchUser(Email) {
 
+    const userFound = await prisma.usuario.findUnique({
+      where: {
+        Email: Email,
+      },
+    });
+    return userFound
+  }
 export async function EncryptPassword(password){
 
     const passwordHash = await bcrypt.hash(password,10)
     return passwordHash
 }
 
-export async function SearchUser(email){
+export async function ValidateSessionAdmin(req) {
 
-    try {       
-        const adminFound = await prisma.admin.findUnique({
-            where:{
-                Email:email
-            }
-        })
+    const userFound = await prisma.usuario.findUnique({
+      where: {
+        id: req.user.id,
+        Email: req.body.Email,
+        id_Rol: req.user.role,
+      },
+    });
     
-        const salesFound = await prisma.usuario.findUnique({
-            where:{
-                Email:email
-            }
-        })
-
-        if (adminFound) {
-            console.log("es Admin")
-            return adminFound.id_Rol
-
-        } else if (salesFound) {
-            console.log("es Vendedor")
-            return salesFound.id_Rol
-
-        } else {
-
-            return null;
-        }
-    } catch (error) {
-        
-        console.error("Error al buscar usuario:", error);
-        throw error;
-    }
-
-}
-
-export async function SearchSalesman(){
-    
-}
+    return userFound;
+  }
