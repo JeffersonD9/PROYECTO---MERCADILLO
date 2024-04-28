@@ -1,57 +1,48 @@
-import {PrismaClient} from '@prisma/client'
 import { CreateAccesToken } from "../Services/CreateToken.js";
-import bcrypt from "bcrypt";
-const prisma = new PrismaClient()
+import {
+  SearchAdmin,
+  validatePassword,
+  ValidateSessionAdmin,
+} from "../Services/ServicesAdmin.js";
 
-export async function LoginAdmin(req,res){
-    const {Email, Password } = req.body;
+export async function LoginAdmin(req, res) {
 
-    try {
+  const { Email, Password } = req.body;
+  try {
 
-        const userFound = await prisma.admin.findUnique({
-            where: {
-                Email: Email
-            }
-        })
-        if (!userFound) return res.status(400).json({ message: "Invalidate Credentials" });
+    const userfound = await SearchAdmin(Email);
 
-        const ismatch = await bcrypt.compare(Password, userFound.Password);
-        if (!ismatch) return res.status(400).json({ message: "Invalidate Credentials" });
+    const passwordOk = await validatePassword(userfound, Password);
+    if (!passwordOk)
+      return res.status(400).json({ message: "Invalidate Credentials" });
 
-        const role = userFound.id_Rol
+    const role = userfound.id_Rol;
+    const token = await CreateAccesToken({ id: userfound.id, role: role });
 
-        const token = await CreateAccesToken({ id: userFound.id, role: role});
+    res.cookie("token", token);
+    res.status(201).send({
+      Email: userfound.Email,
+      redirect: "Admin",
+    });
 
-        res.cookie('token', token);
-        res.status(201).send({
-            Email: userFound.Email,
-        });
-
-    } catch (error) {
-        console.log("Error " +  error)
-        res.status(500).json({ message: error });
-        
-    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 }
 
-export async function ProfileAdmin(req,res){
+export async function ProfileAdmin(req, res) {
+  try {
 
-    try {
-        const userFound = await prisma.admin.findUnique({
-            where: {
-                id: req.user.id,
-                Email: req.body.Email,
-                id_Rol: req.user.role
-            }
-        })
-        if(!userFound) return res.send(400).json({ message: "User not Found"})
+    const adminUserFound = ValidateSessionAdmin(req);
+    if (!adminUserFound) res.status(401).json({ message: "User not Found" });
 
-        return res.status(200).json({
-            message: "User found"
-        })
-    } catch (error) {
-        res.status(500).json({ message: error });
-        console.log(error)
-    }
+    return res.render("administrador", {
+      UserName: adminUserFound.Email,
+      loginPath: "/MercadilloBucaramanga/Admin",
+    });
 
+  } catch (error) {
+    
+    res.status(500).json({ message: error.message });
+  }
 }

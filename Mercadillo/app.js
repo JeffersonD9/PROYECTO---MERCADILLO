@@ -5,10 +5,10 @@ import morgan from 'morgan'
 import path from 'path'
 import Salesman from './routes/DashBoardSalesman.js'
 import Admin from './routes/DashBoardAdmin.js'
+import path from 'path'
 import {PORT} from './config.js'
 import cors from "cors";
 import cookieParser from 'cookie-parser'
-
 const app = express()
 app.use(cors());
 app.use(morgan('dev'));
