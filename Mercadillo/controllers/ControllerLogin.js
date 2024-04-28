@@ -14,6 +14,10 @@ export async function Login(req,res){
      else if( role == 2){
 
         LoginAdmin(req,res)
+        
+     }else{
+
+        res.status(404).json({ message: "El Usuario No Existe" });
      }
         
 }

@@ -1,29 +1,21 @@
-
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 import bcrypt from "bcrypt";
 
-export async function SearchAdmin(Email, Password) {
-  console.log("Hola");
-  const adminFound = await prisma.admin.findUnique({
+export async function SearchAdmin(Email) {
+  
+  const userFound = await prisma.admin.findUnique({
     where: {
       Email: Email,
     },
   });
-  //console.log(userFound);
-  if (!adminFound) throw new Error("Invalid Credentials");
-
-  const isMatch = await validatePassword(Password, adminFound);
-  if (!isMatch) throw new Error("Invalid Credentials");
-
-  return adminFound;
+  return userFound
 }
 
-export async function validatePassword(Password, adminFound) {
-  const isMatch = await bcrypt.compare(Password, adminFound.Password);
-  if (!isMatch) return false;
+export async function validatePassword(userFound, Password) {
 
-  return true;
+  const ismatch = await bcrypt.compare(Password, userFound.Password);
+  return ismatch
 }
 
 export async function ValidateSessionAdmin(req) {
@@ -34,7 +26,5 @@ export async function ValidateSessionAdmin(req) {
       id_Rol: req.user.role,
     },
   });
-  if (!adminFound) throw new Error("User not Found");
-  
   return adminFound;
 }
