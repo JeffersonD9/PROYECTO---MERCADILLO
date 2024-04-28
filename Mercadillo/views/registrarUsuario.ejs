@@ -3,7 +3,12 @@
   <head>
     <%- include('includes/header') -%>
   </head>
+<<<<<<< HEAD
     <section class="bg-light">
+=======
+  <body>
+    <section class="bg-light overflow-auto">
+>>>>>>> IvanDario
       <div class="container">
         <div class="row justify-content-center align-items-center vh-100">
           <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-5">
@@ -12,6 +17,7 @@
                 <h2 class="fs-4 fw-normal text-center text-secondary mb-4">
                   Regístrese
                 </h2>
+<<<<<<< HEAD
                 <div class="text-danger" id="usuarioRegistrado"></div><br>
                 <form action="#!" data-registro>
                   <div class="row gy-2 overflow-hidden">
@@ -31,10 +37,22 @@
                         </div>
                       </div>
                       <div class="col-12">
+=======
+                <div
+                  class="alert alert-danger d-none"
+                  role="alert"
+                  id="notificacion"
+                ></div>
+                <form action="#!" id="formulario">
+                  <div class="row gy-2 overflow-hidden">
+                    <div class="col-12">
+                      <div id="grupo_nombre">
+>>>>>>> IvanDario
                         <div class="form-floating mb-2">
                           <input
                             type="text"
                             class="form-control"
+<<<<<<< HEAD
                             name="Apellidos"
                             id="Apellidos"
                             placeholder="Apellidos"
@@ -74,10 +92,88 @@
                         <label for="Email" class="form-label"
                           >Correo Electónico</label
                         >
+=======
+                            name="nombre"
+                            id="nombre"
+                            placeholder="nombre"
+                            required
+                          />
+                          <label for="nombre" class="form-label">Nombres</label>
+                          <i class="bi bi-x-circle-fill icono"></i>
+                        </div>
+                        <p class="formulario__input-error">
+                          El nombre de usuario debe consistir únicamente en
+                          letras y tener una longitud máxima de 50 caracteres
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div id="grupo_apellido">
+                        <div class="form-floating mb-2">
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="apellido"
+                            id="apellido"
+                            placeholder="apellido"
+                            required
+                          />
+                          <label for="apellido" class="form-label"
+                            >Apellidos</label
+                          >
+                          <i class="bi bi-x-circle-fill icono"></i>
+                        </div>
+                        <p class="formulario__input-error">
+                          El nombre de apellido debe consistir únicamente en
+                          letras y tener una longitud máxima de 50 caracteres
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div id="grupo_username">
+                        <div class="form-floating mb-2">
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="username"
+                            id="username"
+                            placeholder="Nombres Usuario"
+                            required
+                          />
+                          <label for="username" class="form-label"
+                            >Nombres del Usuario</label
+                          >
+                          <i class="bi bi-x-circle-fill icono"></i>
+                        </div>
+                        <p class="formulario__input-error">
+                          El usuario tiene que ser de 4 a 30 dígitos y solo
+                          puede contener numeros, letras y guion bajo.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div id="grupo_email">
+                        <div class="form-floating mb-2">
+                          <input
+                            type="email"
+                            class="form-control"
+                            name="email"
+                            id="email"
+                            placeholder="name@example.com"
+                            required
+                          />
+                          <label for="email" class="form-label"
+                            >Correo Electónico</label
+                          >
+                          <i class="bi bi-x-circle-fill icono"></i>
+                        </div>
+                        <p class="formulario__input-error">Email Incorrecto</p>
+>>>>>>> IvanDario
                       </div>
                     </div>
 
                     <div class="col-12">
+<<<<<<< HEAD
                       <div class="form-floating mb-2">
                         <input
                           type="password"
@@ -119,6 +215,41 @@
                           </button>
                           
 
+=======
+                      <div id="grupo_password">
+                        <div class="form-floating mb-2">
+                          <input
+                            type="password"
+                            class="form-control"
+                            name="password"
+                            id="password"
+                            value=""
+                            placeholder="Contraseña"
+                            required
+                          /> 
+                          <label for="password" class="form-label"
+                            >Contraseña</label
+                          >
+                          <i class="bi bi-x-circle-fill icono"></i>
+                        </div>
+                        <p class="formulario__input-error">
+                          La contraseña debe tener entre 4 y 20 caracteres y no debe contener espacios en blanco, incluyendo la barra espaciadora.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div
+                        class="d-flex gap-2 justify-content-between align-items-center"
+                      >
+                        <a
+                          href="/MercadilloBucaramanga/Login"
+                          class="link-primary text-decoration-none"
+                          >Volver al incio de sesión</a
+                        >
+                        <button class="btn btn-primary btn-lg" type="submit">
+                          Registrar
+                        </button>
+>>>>>>> IvanDario
                       </div>
                     </div>
                   </div>
