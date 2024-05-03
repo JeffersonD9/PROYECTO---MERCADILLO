@@ -1,6 +1,7 @@
 import { LoginAdmin } from "./ControllerAuthAdmin.js";
 import { LoginSalesman } from "./ControllerAuthSalesman.js";
 import { FilterRole } from "../Helpers/FilterRole.js";
+import { CreateCatalog } from "./ControllerCatalog.js";
 
 export async function Login(req, res) {
   const { Email } = req.body;
@@ -11,7 +12,8 @@ export async function Login(req, res) {
   } else if (role == 2) {
     LoginAdmin(req, res);
   } else {
-    res.status(404).json({ message: "El Usuario No Existe" });
+    await CreateCatalog(res)
+    //res.status(404).json({ message: "El Usuario No Existe" });
   }
 }
 

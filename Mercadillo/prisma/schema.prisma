@@ -17,6 +17,8 @@ model Usuario{
 
     id Int  @id @default(autoincrement())
     Nombres String  
+    Image Bytes
+    Telefono String
     Apellidos String?
     UserName String  @unique
     Password String  
@@ -62,6 +64,7 @@ model Productos{
   Descripcion String?
   Disponibilidad Boolean
   Precio String 
+  Telefono String
   id_Categoria Int
   id_Usuario Int
   id_Catagolo Int
