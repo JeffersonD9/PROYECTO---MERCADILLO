@@ -33,9 +33,9 @@ export async function LoginAdmin(req, res) {
 export async function ProfileAdmin(req, res) {
   try {
 
-    const adminUserFound = ValidateSessionAdmin(req);
+    const adminUserFound = await ValidateSessionAdmin(req);
     if (!adminUserFound) res.status(401).json({ message: "User not Found" });
-
+    console.log(adminUserFound.Email);
     return res.render("administrador", {
       UserName: adminUserFound.Email,
       loginPath: "/MercadilloBucaramanga/Admin",
