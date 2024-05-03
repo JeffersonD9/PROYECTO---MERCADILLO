@@ -7,7 +7,7 @@ export async function FilterRole(email){
         const adminFound = await SearchAdmin(email)
     
         const salesFound = await SearchUser(email)
-
+        
         if (adminFound) {
             console.log("es Admin")
             return adminFound.id_Rol

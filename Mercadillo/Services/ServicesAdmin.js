@@ -11,7 +11,15 @@ export async function SearchAdmin(Email) {
   });
   return userFound
 }
+export async function CreateCatalog(userfound,productFound){
 
+  const createCat = await prisma.catalogo.create({
+
+        Nombre: productFound.Nombre,
+        Descripcion : productFound.Descripcion,
+        id_usuario : userfound.id_usuario
+  })
+}
 export async function validatePassword(userFound, Password) {
 
   const ismatch = await bcrypt.compare(Password, userFound.Password);
