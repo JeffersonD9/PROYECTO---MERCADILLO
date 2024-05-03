@@ -4,6 +4,7 @@ import { FilterRole } from "../Helpers/FilterRole.js";
 
 export async function Login(req, res) {
   const { Email } = req.body;
+  console.log(Email, " Aquii")
   const role = await FilterRole(Email);
 
   if (role == 1) {
@@ -20,7 +21,7 @@ export async function LogOut(req, res) {
     expires: new Date(0),
   });
 
-  return res.sendStatus(200);
+  return res.status(200).json({redirect: "/MercadilloBucaramanga"})
 }
 
 export  function Ingresar(req,res){
