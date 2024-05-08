@@ -4,7 +4,6 @@ import { FilterRole } from "../Helpers/FilterRole.js";
 
 export async function Login(req, res) {
   const { Email } = req.body;
-  console.log(Email, " Aquii")
   const role = await FilterRole(Email);
 
   if (role == 1) {

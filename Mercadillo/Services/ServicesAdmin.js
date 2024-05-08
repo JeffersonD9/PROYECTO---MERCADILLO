@@ -27,6 +27,5 @@ export async function ValidateSessionAdmin(req) {
       id_Rol: req.user.role,
     },
   });
-  console.log(req.body);
   return adminFound;
 }

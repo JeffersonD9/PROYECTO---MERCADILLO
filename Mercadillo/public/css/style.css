@@ -1,4 +1,6 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+
 html, body {
     height: 100%;
     margin: 0;
@@ -39,12 +41,6 @@ html, body {
 
 
 
-
-
-
-
-
-
 /**/
 .full-height-section{
     height: 100%;
@@ -78,3 +74,74 @@ html, body {
   .escondido{
     display: none;
   }
+
+
+  /*Card*/
+  .card-body-padding{
+    padding: 8px;
+  }
+
+  .btn-card-ingresar{
+    background-color: #209b3c;
+    color: white;
+    font-weight: 600;
+  }
+  .btn-card-ingresar:hover{
+    background-color: #31d657;
+    color: white;
+  }
+
+ /*Buscador Admin*/
+ .buscador-admin{
+  width: 400px;
+  height: 40px;
+  margin-right: 20px;
+}
+
+.btn-eliminar-usuario{
+  color:red;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+.dataTables_filter{
+ display: flex;
+ justify-self: end;
+
+}
+
+
+  @media (max-width:575px) {
+    .with-card {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+      }
+      .with-card button{
+        width: auto !important
+      }
+      .with-card img{
+        width: 50%;
+        object-fit: cover;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 5px;
+        
+      }
+      .with-card .col-12{
+        width: 50%;
+      }
+
+      /*Buscador Admin*/
+      .buscador-admin{
+        width: 70%;
+      }
+      /*table usuarios*/
+      .table-usuarios{
+        max-width: 600px;
+        overflow-x: scroll;
+      }  
+    
+  }
+
+ 
+ 

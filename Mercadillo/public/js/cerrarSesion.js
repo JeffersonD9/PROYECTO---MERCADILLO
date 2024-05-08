@@ -1,6 +1,3 @@
-console.log("interfaz Admin");
-
-
 const cerrarSesion = document.querySelector("#cerrar-sesion");
 cerrarSesion.addEventListener("click",async(e)=>{
     e.preventDefault();

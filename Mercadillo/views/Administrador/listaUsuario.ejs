@@ -1,0 +1,32 @@
+
+<form class="d-flex justify-content-center align-items-center mb-3">
+  <input class="form-control mr-sm-2 buscador-admin" type="search" placeholder="Nombre" aria-label="Search">
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+</form>
+
+<div class="table-responsive ">
+<table class="table">
+  <thead class="table-light">
+    <tr class="">
+      <th scope="col">Nombres</th>
+      <th scope="col">Apellidos</th>
+      <th scope="col">Usuario</th>
+      <th scope="col">Email</th>
+      <th scope="col">Acción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <% usuarios.forEach((vendedor)=>{ %>
+        <td><%= vendedor.Nombres %></td>
+        <td><%= vendedor.Apellidos %></td>
+        <td><%= vendedor.UserName %></td>
+        <td><%= vendedor.Email %></td>
+        <td> <a href="#" class=" btn-eliminar-usuario">Eliminar</a> </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table> 
+</div>
+
+<script src="../../js/usuarios.js"></script>
