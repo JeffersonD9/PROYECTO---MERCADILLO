@@ -13,7 +13,7 @@ export async function SearchAdmin(Email) {
 }
 export async function CreateCatalog(userfound,productFound){
 
-  const createCat = await prisma.catalogo.create({
+  const createCat = await prisma.catalogos.create({
 
         Nombre: productFound.Nombre,
         Descripcion : productFound.Descripcion,

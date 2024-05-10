@@ -17,7 +17,7 @@ model Usuario{
 
     id Int  @id @default(autoincrement())
     Nombres String  
-    Image Bytes
+    Image Bytes  @map("VARBINARY(255)")
     Telefono String
     Apellidos String?
     UserName String  @unique

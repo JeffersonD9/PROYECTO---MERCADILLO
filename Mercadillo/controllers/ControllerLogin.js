@@ -11,7 +11,7 @@ export async function Login(req, res) {
     LoginSalesman(req, res);
   } else if (role == 2) {
     LoginAdmin(req, res);
-  } else {   
+  } else{   
     res.status(404).json({ message: "El Usuario No Existe" });
   }
 }
