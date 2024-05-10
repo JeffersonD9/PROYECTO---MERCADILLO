@@ -29,6 +29,7 @@
                             name="nombre"
                             id="nombre"
                             placeholder="nombre"
+                            maxlength="40"
                             required
                           />
                           <label for="nombre" class="form-label">Nombres</label>
@@ -36,7 +37,7 @@
                         </div>
                         <p class="formulario__input-error">
                           El nombre de usuario debe consistir únicamente en
-                          letras y tener una longitud máxima de 50 caracteres
+                          letras y tener una longitud máxima de 40 caracteres
                         </p>
                       </div>
                     </div>
@@ -49,6 +50,7 @@
                             name="apellido"
                             id="apellido"
                             placeholder="apellido"
+                            maxlength="40"
                             required
                           />
                           <label for="apellido" class="form-label"
@@ -58,7 +60,30 @@
                         </div>
                         <p class="formulario__input-error">
                           El nombre de apellido debe consistir únicamente en
-                          letras y tener una longitud máxima de 50 caracteres
+                          letras y tener una longitud máxima de 40 caracteres
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div id="grupo_celular">
+                        <div class="form-floating mb-2">
+                          <input
+                            type="number"
+                            class="form-control"
+                            name="celular"
+                            id="celular"
+                            placeholder="celular"
+                            maxlength="15"
+                            required
+                          />
+                          <label for="celular" class="form-label"
+                            >Número de Celular</label
+                          >
+                          <i class="bi bi-x-circle-fill icono"></i>
+                        </div>
+                        <p class="formulario__input-error">
+                          El celular  debe consistir únicamente en
+                          números y tener una longitud máxima de 15 digitos
                         </p>
                       </div>
                     </div>
@@ -71,6 +96,7 @@
                             name="username"
                             id="username"
                             placeholder="Nombres Usuario"
+                            maxlength="30"
                             required
                           />
                           <label for="username" class="form-label"
@@ -114,6 +140,7 @@
                             id="password"
                             value=""
                             placeholder="Contraseña"
+                            maxlength="20"
                             required
                           /> 
                           <label for="password" class="form-label"
@@ -148,7 +175,7 @@
         </div>
       </div>
     </section>
-    <script src="../js/registrarUsuario.js"></script>
+    <script type="module" src="../js/registrarUsuario.js"></script>
   </body>
 </html>
 

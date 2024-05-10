@@ -12,11 +12,12 @@ export async function LoginSalesman(req, res) {
     if (!passwordOk)
       return res.status(400).json({ message: "Invalidate Credentials" });
 
-    const token = await CreateAccesToken({ id: userFound.id });
+    const token = await CreateAccesToken({ id: userFound.id, userName:userFound.UserName });
 
     res.cookie("token", token);
     res.status(201).send({
       UserName: userFound.UserName,
+      redirect:"Usuario"
     });
   } catch (error) {
     res.status(500).json({ message: error });
@@ -25,13 +26,14 @@ export async function LoginSalesman(req, res) {
 }
 export async function ProfileSalesman(req, res) {
   try {
+    console.log(req)
     const userFound = await ValidateSessionAdmin(req)
     if (!userFound) return res.status(400).json({ message: "User not Found" });
-
-    return res.json({
+    return res.render("vendedor",{
       id: userFound.id,
       UserName: userFound.UserName,
       Email: userFound.Email,
+      index:'Usuario'
     });
 
   } catch (error) {

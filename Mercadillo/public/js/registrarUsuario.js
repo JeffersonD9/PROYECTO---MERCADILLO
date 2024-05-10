@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 console.log("Desde el public js");
 
 const usuarioRegistro = document.querySelector("[data-registro]");
@@ -49,15 +50,19 @@ usuarioRegistro.addEventListener("submit", (evento) =>
 );
 
 =======
+=======
+import {convertirUpperCamelCase} from './upperCamelCase.js'
+>>>>>>> 082391afffc5040667d08df5b2987eaac269dc25
 const formulario = document.querySelector("#formulario");
 const inputs = document.querySelectorAll(" #formulario input");
 let notificacion = document.getElementById("notificacion");
 
 const expresiones = {
   username: /^[a-zA-Z0-9_\-]{4,30}$/, // Letras, numeros, guion y guion_bajo
-  nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-  apellido: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+  nombre: /^[a-zA-ZÀ-ÿ\s]{1,30}$/, // Letras y espacios, pueden llevar acentos.
+  apellido: /^[a-zA-ZÀ-ÿ\s]{1,30}$/, // Letras y espacios, pueden llevar acentos.
   password: /^.{4,20}$/, // 4 a 20 digitos.
+  celular: /^.{10,15}$/, // 4 a 20 digitos.
   email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
 };
 
@@ -67,6 +72,8 @@ const campos = {
   password: false,
   email: false,
   apellido: false,
+  celular: false,
+
 };
 
 const validarFormulario = (e) => {
@@ -85,6 +92,9 @@ const validarFormulario = (e) => {
       break;
     case "password":
       validarCampo(expresiones.password, e.target, "password");
+      break;
+      case "celular":
+      validarCampo(expresiones.celular, e.target, "celular");
       break;
   }
 };
@@ -132,11 +142,15 @@ inputs.forEach((input) => {
 //Funcion para registrar los usuarios
 async function registrarUsuario(e) {
   e.preventDefault();
-  let Nombres = (document.getElementById("nombre").value).trim();
-  let Apellidos = (document.getElementById("apellido").value);
-  let UserName = (document.getElementById("username").value).trim();
-  let Email = (document.getElementById("email").value).trim();
-  let Password = (document.getElementById("password").value).trim();
+  const Nombres = (document.getElementById("nombre").value).trim();
+  Nombres = convertirUpperCamelCase(Nombres);
+  const Apellidos = (document.getElementById("apellido").value).trim();
+  Apellidos = convertirUpperCamelCase(Apellidos);
+  const UserName = (document.getElementById("username").value).trim();
+  const Email = (document.getElementById("email").value).trim();
+  const Password = (document.getElementById("password").value).trim();
+  const Celular = (document.getElementById("celular").value).trim();
+
   
   try {
     const registroFetch = await fetch(
@@ -152,6 +166,7 @@ async function registrarUsuario(e) {
           UserName,
           Email,
           Password,
+          Celular,
         }),
       }
     );
@@ -194,11 +209,13 @@ async function registrarUsuario(e) {
   }
 }
 
+
+
 //Evento cuando se da click en el boton registrar
 formulario.addEventListener("submit", (e) => {
   e.preventDefault();
   //Validamos que los campos se encuentre llenos
-  if(campos.username && campos.nombre && campos.password && campos.email && campos.apellido ){
+  if(campos.username && campos.nombre && campos.password && campos.email && campos.apellido && campos.celular ){
     registrarUsuario(e);
   }else{ //inputs no llenados
     notificacion.classList.remove("d-none");

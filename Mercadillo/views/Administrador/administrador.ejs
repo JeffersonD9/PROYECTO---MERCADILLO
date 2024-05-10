@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../includes/header') -%>
+  </head>
+  <body>
+    <%- include('../includes/nav') -%>
+    <div class="container-fluid">
+      <h1>Administrador</h1>
+
+      <a href="/MercadilloBucaramanga/Admin/Usuarios"> usuarios</a>
+      <a href="/MercadilloBucaramanga/Admin/Categorias"> categorias</a>
+
+      <% if (typeof body !== 'undefined') { %> <%- include(body) -%> <% } %>
+    </div>
+
+    <%- include('../includes/footer') -%>
+
+    <!--<script src="../js/administrador.js"></script> -->
+  </body>
+</html>

@@ -19,6 +19,7 @@ export async function CreateCatalog(userfound,productFound){
         Descripcion : productFound.Descripcion,
         id_usuario : userfound.id_usuario
   })
+  return createCat
 }
 export async function validatePassword(userFound, Password) {
 
@@ -27,7 +28,7 @@ export async function validatePassword(userFound, Password) {
 }
 
 export async function ValidateSessionAdmin(req) {
-
+  
   const adminFound = await prisma.admin.findUnique({
     where: {
       id: req.user.id,
@@ -35,6 +36,5 @@ export async function ValidateSessionAdmin(req) {
       id_Rol: req.user.role,
     },
   });
-  
   return adminFound;
 }

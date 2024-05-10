@@ -11,9 +11,8 @@ export async function Login(req, res) {
     LoginSalesman(req, res);
   } else if (role == 2) {
     LoginAdmin(req, res);
-  } else {
-    await CreateCatalog(res)
-    //res.status(404).json({ message: "El Usuario No Existe" });
+  } else {   
+    res.status(404).json({ message: "El Usuario No Existe" });
   }
 }
 
@@ -22,7 +21,7 @@ export async function LogOut(req, res) {
     expires: new Date(0),
   });
 
-  return res.sendStatus(200);
+  return res.status(200).json({redirect: "/MercadilloBucaramanga"})
 }
 
 export  function Ingresar(req,res){
