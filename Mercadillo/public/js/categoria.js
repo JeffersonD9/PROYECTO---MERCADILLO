@@ -7,6 +7,8 @@ const btnModalEliminar = document.querySelector(".btnModalEliminar");
 const eliminarModalLabel = document.querySelector("#eliminarModalLabel");
 let notificacion = document.getElementById("notificacion");
 let notificacionLlenarCampos = document.getElementById("notificacionLlenarCampos")
+let idFila;
+let filaTabla;
 const modalCategoria = new bootstrap.Modal(
   document.getElementById("modalCategoria")
 );
@@ -50,6 +52,21 @@ const expresiones = {
   catalogo: "",
 };
 
+// Manejar el evento de cambio en el select
+let catalogoSeleccionado;
+catalogo.addEventListener("change", function() {
+  // Obtener el índice de la opción seleccionada
+  var selectedIndex = catalogo.selectedIndex;
+
+  // Obtener el texto de la opción seleccionada
+   catalogoSeleccionado = catalogo.options[selectedIndex].text;
+
+  // Mostrar el texto seleccionado en la consola (puedes usarlo como necesites)
+  console.log("Texto seleccionado:", catalogoSeleccionado);
+});
+
+
+
 const validarFormulario = (e) => {
   switch (e.target.name) {
     case "categoria":
@@ -63,8 +80,6 @@ const validarFormulario = (e) => {
         document
           .querySelector(`#grupocategoria .formulario__input-error`)
           .classList.remove("formulario__input-error-activo");
-          console.log("aca nombre categoria")
-          console.log(campos)
           campos['nombreDeCategoria']= true;
       }
       
@@ -107,33 +122,51 @@ btnCrear.addEventListener("click", () => {
   opcion = "crear";
 });
 
-function eliminarUsuario(id) {
-  btnModalEliminar.addEventListener("click", () => {
-    desactivarModalEliminar();
-    fetch(url + id, {
-      method: "DELETE",
+function eliminarCategoria() {
+  desactivarModalEliminar();
+  console.log(idFila)
+  console.log(filaTabla, " Fila tabla");
+  fetch(url + idFila, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("La categoria no se puede eliminar");
+      }
+      return response.json();
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("La solicitud no fue exitosa");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        notificacionExitosa(data);
-        tiempoNotificacion();
-      })
-      .catch((error) => {
-        notificacionAlerta(error);
-      });
-  });
+    .then((data) => {
+      filaTabla.parentNode.removeChild(filaTabla); //Elimina la fila
+      notificacionExitosa(data);
+      tiempoNotificacion();
+      
+    })
+    .catch((error) => {
+      notificacionAlerta(error);
+    });
 }
 
-function activarModalEliminar(id, nombreCategoria) {
+
+
+
+
+
+
+
+
+
+
+function activarModalEliminar( nombreCategoria) {
   modalEliminar.show();
   eliminarModalLabel.textContent = `Esta seguro de Eliminar la categoria ${nombreCategoria}`;
-  eliminarUsuario(id);
 }
+
+btnModalEliminar.addEventListener("click", ()=>{
+  console.log("aca")
+  eliminarCategoria()
+}
+);
+
 
 function desactivarModalEliminar() {
   modalEliminar.hide();
@@ -165,43 +198,39 @@ function notificacionExitosa(data) {
 
 function tiempoNotificacion() {
   setTimeout(() => {
-    location.reload();
     notificacion.classList.add("d-none");
     notificacion.textContent = "";
-  }, 2000);
+  }, 3000);
 }
 
-const on = (elemento, evento, selector, funcion) => {
-  elemento.addEventListener(evento, (e) => {
-    if (e.target.className === selector) {
-      funcion(e);
-    }
-  });
-};
-
-on(document, "click", "btn-eliminar-usuario", (e) => {
-  const fila = e.target.parentNode.parentNode;
-  const id = fila.firstElementChild.innerHTML;
-  const nombreCategoria = fila.children[1].innerHTML;
-  activarModalEliminar(id, nombreCategoria);
-});
-
-on(document, "click", "btn-actualizar-usuario", (e) => {
-  const fila = e.target.parentNode.parentNode;
-  idForm = fila.children[0].innerHTML; //traer el indice de la tabla
-
-  nombreCategoria.value = fila.children[1].innerHTML; //traer la categoria de la tabla
-  for (let i = 0; i < catalogo.options.length; i++) {
-    //seleccionar el catalogo dependiendo la fila
-    if (catalogo.options[i].text === fila.children[2].innerHTML) {
-      // Establecer la opción como seleccionada en el form
-      catalogo.selectedIndex = i;
-      break;
-    }
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("btn-eliminar-usuario")) {
+    filaTabla = e.target.parentNode.parentNode;
+    idFila = filaTabla.firstElementChild.innerHTML;
+    const nombreCategoria = filaTabla.children[1].innerHTML;
+    activarModalEliminar(nombreCategoria);
   }
-  opcion = "actualizar";
-  activarModalCategoria();
 });
+
+document.addEventListener("click",(e)=>{
+  if (e.target.classList.contains("btn-actualizar-usuario")) {
+    const fila = e.target.parentNode.parentNode;
+    idForm = fila.children[0].innerHTML; //traer el indice de la tabla
+    idFila = fila;
+    nombreCategoria.value = fila.children[1].innerHTML; //traer la categoria de la tabla
+    for (let i = 0; i < catalogo.options.length; i++) {
+      //seleccionar el catalogo dependiendo la fila
+      if (catalogo.options[i].text === fila.children[2].innerHTML) {
+        // Establecer la opción como seleccionada en el form
+        catalogo.selectedIndex = i;
+        break;
+      }
+    }
+    opcion = "actualizar";
+    activarModalCategoria();
+  }
+})
+
 
 
 
@@ -230,6 +259,24 @@ function actualizarOCrear(){
         return response.json();
       })
       .then((data) => {
+        console.log(data)
+        var nuevaFila = `
+        <tr>
+          <td>${data.categorias.id}</td>
+          <td>${data.categorias.Nombre}</td>
+          <td>${catalogoSeleccionado}</td>
+          <td>
+            <a href="#" class="btn-eliminar-usuario">Eliminar</a>
+            <a href="#" class="btn-actualizar-usuario">Actualizar</a>
+          </td>
+        </tr>
+      `;
+
+      // Agregar la nueva fila al final de la tabla
+      $("#table tbody").prepend(nuevaFila);
+
+ 
+
         notificacionExitosa(data);
         tiempoNotificacion();
       })
@@ -259,6 +306,10 @@ function actualizarOCrear(){
         return response.json();
       })
       .then((data) => {
+
+        
+        idFila.cells[1].textContent = convertirUpperCamelCase(nombreCategoria.value).trim();
+        idFila.cells[2].textContent = catalogoSeleccionado;
         notificacionExitosa(data);
         tiempoNotificacion();
       })

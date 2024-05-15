@@ -13,20 +13,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Usuario{
-
-    id Int  @id @default(autoincrement())
-    Nombres String  
-    Apellidos String 
-    UserName String  @unique 
-    Password String  
-    Email  String  @unique 
-    Celular String
-    DateCreated  DateTime @default(now())
-    id_Rol Int
-    roles Roles @relation(fields: [id_Rol],references: [id])
-    productos Productos []
-}
+  model Usuario{
+      id Int  @id @default(autoincrement())
+      Nombres String  
+      Apellidos String 
+      UserName String  @unique 
+      Password String  
+      Email  String  @unique 
+      Celular String
+      Imagen Bytes
+      DateCreated  DateTime @default(now())
+      id_Rol Int
+      roles Roles @relation(fields: [id_Rol],references: [id])
+      productos Productos []
+  }
 
 model Roles{
 
@@ -69,7 +69,7 @@ model Admin{
 model Productos{
 
   id Int @id @default(autoincrement())
-  Nombre String @unique 
+  Nombre String
   Descripcion String 
   Disponibilidad Boolean
   Precio String 
@@ -79,4 +79,3 @@ model Productos{
   categorias Categorias @relation(fields: [id_Categoria],references: [id])  
   usuarios Usuario  @relation(fields: [id_Usuario],references: [id])  
 }
-

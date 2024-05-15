@@ -7,6 +7,16 @@ html, body {
     padding: 0;
 }
 
+.btn-arrow{
+  border:none;
+  background: none;
+}
+.btn-catalogo-nav{
+  border:none;
+  background: none;
+  padding: 0;
+}
+
 /*Texto cuando se ingresa un error*/
 .formulario__input-error {
     color: #bb2929;
@@ -102,13 +112,87 @@ html, body {
   color:red;
   text-decoration: none;
   margin-right: 20px;
+  font-weight: 600;
 }
+
+.btn-actualizar-usuario{
+  color:rgb(36, 36, 224);
+  text-decoration: none;
+  margin-right: 20px;
+  font-weight: 600;
+}
+
 
 .dataTables_filter{
  display: flex;
  justify-self: end;
 
 }
+
+.m-cate-cat{
+  margin-left: 30px;
+}
+
+
+.img-header-card-usuario-index{
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+
+
+.img-header-card{
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+
+.with-card-usuario {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+.with-card-usuario button{
+  width: auto !important
+}
+
+.with-card-usuario .col-12{
+  width: 50%;
+}
+
+.btn-nav-index-usuario:hover{
+  background-color: whitesmoke;
+}
+
+
+.nombreUsuario{
+  font-size: 18px; 
+  font-weight: 500;
+}
+
+
+#scrollToTopBtn {
+  display: none; /* Inicialmente oculto */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+#scrollToTopBtn:hover {
+  background-color: #1053d8;
+}
+
 
 
   @media (max-width:575px) {
@@ -140,8 +224,29 @@ html, body {
         max-width: 600px;
         overflow-x: scroll;
       }  
+
+      
+  }
+
+  @media (min-width: 768px) {
+    .d-md-block {
+        height: 100vh;
+       
+    }
     
   }
 
- 
+  @media (max-width: 768px) {
+    .hamburguesa {
+        height: 100vh;
+    }
+
+    .nav-width{
+      width: 180px;
+      padding-left: 10px;
+    }
+    
+  }
+
+
  

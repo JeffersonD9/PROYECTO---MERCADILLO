@@ -1,10 +1,18 @@
-<div class="alert alert-danger d-none" role="alert" id="notificacion"></div>
-<a id="btn-crear" type="button" class="btn btn-primary"> Añadir Categoria </a>
 
-<div class="container-fluid my-4">
-  <div class="row">
+<div class="" style="width: 100%; height: 70px;" >
+  <div class="alert alert-danger d-none" id="notificacion" role="alert" ></div>
+
+</div>
+
+
+<a id="btn-crear" type="button" class="btn btn-primary">
+  <i class="bi bi-plus-lg"></i> Añadir Categoría
+</a>
+
+<div class="container-fluid my-4 ">
+  <div class="row ">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-      <table class="table">
+      <table class="table " id="table">
         <thead class="table-light">
           <tr>
             <th class="col">#</th>
@@ -69,7 +77,6 @@
               <select class="form-control select-catalogo" id="catalogo" name="catalogo">
                 <option value="" selected>Seleccionar</option>
                 <% catalogos.forEach((catalogo)=>{ %>
-
                 <option value="<%= catalogo.id%>"><%=catalogo.Nombre %></option>
                 <% }); %>
               </select>
