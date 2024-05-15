@@ -13,6 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+<<<<<<< HEAD
   model Usuario{
       id Int  @id @default(autoincrement())
       Nombres String  
@@ -27,6 +28,24 @@ datasource db {
       roles Roles @relation(fields: [id_Rol],references: [id])
       productos Productos []
   }
+=======
+model Usuario{
+
+    id Int  @id @default(autoincrement())
+    Nombres String  
+    Image Bytes @db.VarBinary(255)
+    Telefono String
+    Apellidos String?
+    UserName String  @unique
+    Password String  
+    Email  String  @unique 
+    Celular String
+    DateCreated  DateTime @default(now())
+    id_Rol Int
+    roles Roles @relation(fields: [id_Rol],references: [id])
+    productos Productos []
+}
+>>>>>>> 60570192efeb7b08f8facc2fa2738640ca79414b
 
 model Roles{
 
@@ -73,6 +92,8 @@ model Productos{
   Descripcion String 
   Disponibilidad Boolean
   Precio String 
+  Image Bytes @db.VarBinary(255)
+  Telefono String
   Presentacion String 
   id_Categoria Int
   id_Usuario Int

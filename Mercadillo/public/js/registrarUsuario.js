@@ -1,4 +1,62 @@
+<<<<<<< HEAD
 import { convertirUpperCamelCase } from "./upperCamelCase.js";
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+console.log("Desde el public js");
+
+const usuarioRegistro = document.querySelector("[data-registro]");
+
+async function registrarUsuario(evento) {
+  evento.preventDefault();
+  console.log(evento, "Esto es un evento");
+  let Nombres = document.getElementById("Nombres").value;
+  let Apellidos = document.getElementById("Apellidos").value;
+  let UserName = document.getElementById("UserName").value;
+  let Email = document.getElementById("Email").value;
+  let Password = document.getElementById("Password").value;
+  let usuarioRegistrado = document.getElementById("usuarioRegistrado")
+
+  
+  try {
+    const registroFetch = await fetch("http://localhost:3000/MercadilloBucaramanga/Registrar", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        Nombres,
+        Apellidos,
+        UserName,
+        Email,
+        Password,
+      }),
+    });
+
+    const respuesta = await registroFetch.json();
+
+    console.log("Respuesta del servidor:", respuesta);
+    usuarioRegistrado.innerHTML = `${respuesta.error.message}`
+
+    if (!registroFetch.ok) {
+      throw new Error("No fue posible enviar los datos");
+    }
+    
+    
+  } catch (error) {
+    console.error("Error al intentar registrar:", error.message);
+  }
+}
+
+usuarioRegistro.addEventListener("submit", (evento) =>
+  registrarUsuario(evento)
+);
+
+=======
+=======
+import {convertirUpperCamelCase} from './upperCamelCase.js'
+>>>>>>> 082391afffc5040667d08df5b2987eaac269dc25
+>>>>>>> 60570192efeb7b08f8facc2fa2738640ca79414b
 const formulario = document.querySelector("#formulario");
 const inputs = document.querySelectorAll(" #formulario input");
 let notificacion = document.getElementById("notificacion");
@@ -189,5 +247,9 @@ formulario.addEventListener("submit", (e) => {
     });
   }
 });
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> IvanDario
+>>>>>>> 60570192efeb7b08f8facc2fa2738640ca79414b
