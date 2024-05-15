@@ -8,6 +8,7 @@ import path from 'path'
 import {PORT} from './config.js'
 import cors from "cors";
 import cookieParser from 'cookie-parser'
+import multer from 'multer'
 const app = express()
 app.use(cors());
 app.use(morgan('dev'));
@@ -20,6 +21,9 @@ app.set('view engine', 'ejs');
 app.set("views", path.join(__dirname, 'views'));  //Identificar la carpeta views
 app.use(express.static(path.join(__dirname, "public"))); //Identificar la carpeta public
 
+const uploadPath = path.join(__dirname, 'public', 'Image_Products');
+console.log(uploadPath)
+const upload = multer({dest: uploadPath})
 
 app.set('port', PORT)
 app.use(express.urlencoded({ extended: false }));

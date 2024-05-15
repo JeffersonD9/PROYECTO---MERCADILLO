@@ -1,4 +1,4 @@
-import { CreateItem,SearchByIdItem,SearchsItems,DeleteItem,UpdateItem} from '../Services/ServicesProducts'
+import { CreateItem,SearchByIdItem,SearchsItems,DeleteItem,UpdateItem} from '../Services/ServicesProducts.js'
 
 export async function CreateProduct(req,res){
 
@@ -7,7 +7,7 @@ export async function CreateProduct(req,res){
         
         const newProduct = await CreateItem(data)
         res.status(200).json(newProduct)
-        
+
     } catch (error) {
 
         res.status(500).json({ message: error });
