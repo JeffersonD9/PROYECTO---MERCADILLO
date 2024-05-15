@@ -17,7 +17,7 @@ model Usuario{
 
     id Int  @id @default(autoincrement())
     Nombres String  
-    Image Bytes  @map("VARBINARY(255)")
+    Image Bytes @db.VarBinary(255)
     Telefono String
     Apellidos String?
     UserName String  @unique
@@ -75,7 +75,7 @@ model Productos{
   Descripcion String 
   Disponibilidad Boolean
   Precio String 
-  Image Bytes
+  Image Bytes @db.VarBinary(255)
   Telefono String
   Presentacion String 
   id_Categoria Int

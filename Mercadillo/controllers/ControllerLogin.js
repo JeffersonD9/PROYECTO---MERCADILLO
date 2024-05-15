@@ -1,7 +1,6 @@
 import { LoginAdmin } from "./ControllerAuthAdmin.js";
 import { LoginSalesman } from "./ControllerAuthSalesman.js";
 import { FilterRole } from "../Helpers/FilterRole.js";
-import { CreateCatalog } from "./ControllerCatalog.js";
 
 export async function Login(req, res) {
   const { Email } = req.body;

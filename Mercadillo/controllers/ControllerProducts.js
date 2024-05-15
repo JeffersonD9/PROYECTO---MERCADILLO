@@ -1,14 +1,13 @@
-import {PrismaClient} from '@prisma/client'
-const prisma = new PrismaClient()
+import { CreateItem,SearchByIdItem,SearchsItems,DeleteItem,UpdateItem} from '../Services/ServicesProducts'
 
 export async function CreateProduct(req,res){
 
     const data = req.body
     try {
-        const newProduct = await prisma.productos.create({
-            data: data
-        })
+        
+        const newProduct = await CreateItem(data)
         res.status(200).json(newProduct)
+        
     } catch (error) {
 
         res.status(500).json({ message: error });
@@ -22,10 +21,9 @@ export async function GetProductById(req,res){
     const id = parseInt(req.params.id, 10)
     try {
 
-        const getProductById = await prisma.productos.findUnique({
-            where: {id:id,id_Categoria:id_categoria},
-        })
-        res.status(200).json({ message: "Producto", data: getProductById });
+        const getProductById = await SearchByIdItem(id_categoria,id)
+        res.status(200).json({ message: "Producto", data: getProductById })
+
     } catch (error) {
          res.status(500).json({ message: error });
          console.log(error)
@@ -34,9 +32,11 @@ export async function GetProductById(req,res){
 
 export async function GetProducts(req,res){
     try {
-        const getProducts = await prisma.productos.findMany()
+
+        const getProducts = await SearchsItems()
         res.status(200).json({ message: "Productos", data: getProducts });
         console.log(getProducts)
+
     } catch (error) {
         res.status(500).json({ message: error });
         console.log(error)
@@ -49,10 +49,7 @@ export async function DeleteProduct(req,res){
     const id = parseInt(req.params.id, 10)
     try {
         
-        const deleteProduct = await prisma.productos.delete({
-
-            where:{id:id, id_Categoria: id_categoria},
-        })
+        const deleteProduct = await DeleteItem(id_categoria,id)
         res.status(200).json({ message: "Producto Borrado", data: deleteProduct });
         
     } catch (error) {
@@ -68,10 +65,7 @@ export async function UpdateProduct (req,res){
     const id_categoria = parseInt(req.params.id_Categoria, 10)
     try {
         
-        const updateProduct = await prisma.productos.update({
-            where:{id:id, id_Categoria: id_categoria},
-            data: data
-        })
+        const updateProduct = await UpdateItem(id_categoria,id,data);
         
         res.status(200).json({ message: "Producto actualizado correctamente", data: updateProduct });
     } catch (error) {

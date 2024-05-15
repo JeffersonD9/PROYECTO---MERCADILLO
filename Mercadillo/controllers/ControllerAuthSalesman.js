@@ -1,7 +1,6 @@
 import { CreateAccesToken } from "../Services/CreateToken.js";
 import { SearchUser,ValidateSessionAdmin } from "../Services/ServicesUser.js";
 import { validatePassword } from "../Services/ServicesAdmin.js";
-
 export async function LoginSalesman(req, res) {
   const { Email, Password } = req.body;
 
