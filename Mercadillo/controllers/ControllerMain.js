@@ -126,7 +126,7 @@ export async function FiltrarCatalogosPrincipal(req, res) {
         body: "datosFiltroCatalogo",
         dataCatalogo,
         titulo,
-        UserName: req.user 
+        
       });
     } else {
       // Si no se encontró el catálogo, enviamos una respuesta indicando que no se encontraron catálogos
@@ -202,7 +202,6 @@ export async function FiltrarCategoriaPrincipal(req, res) {
       body: "datosFiltroCategoria",
       result,
       titulo,
-      UserName: req.user 
     });
   } catch (error) {
     console.log(error);

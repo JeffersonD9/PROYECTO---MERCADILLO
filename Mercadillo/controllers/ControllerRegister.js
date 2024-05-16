@@ -15,8 +15,10 @@ async function Register(req,res){
     try {    
         
        const passwordHash = await bcrypt.hash(Password,10)
-       const dataImagen = fs.readFileSync(path.join( "imagenes", req.file.filename))
-       
+       console.log(req.file.originalname)
+       const dataImagen =  req.file.originalname
+       const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(dataImagen)));
+
 
        const newUser = await prisma.usuario.create({ 
             data:{
@@ -27,7 +29,7 @@ async function Register(req,res){
                 Email, 
                 Password:passwordHash, 
                 Celular,
-                Imagen:dataImagen
+                Imagen:base64String
             }
        }) 
 
