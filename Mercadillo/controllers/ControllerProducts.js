@@ -1,5 +1,6 @@
 import { CreateItem,SearchByIdItem,SearchsItems,DeleteItem,UpdateItem} from '../Services/ServicesProducts.js'
-
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 export async function CreateProduct(req,res){
 
     const data = req.body
@@ -34,8 +35,19 @@ export async function GetProducts(req,res){
     try {
 
         const getProducts = await SearchsItems()
-        res.status(200).json({ message: "Productos", data: getProducts });
-        console.log(getProducts)
+        
+        //res.status(200).json({ message: "Productos", data: getProducts });
+        const categoria = await prisma.categorias.findMany();
+
+        res.render("Vendedor/vendedor", {
+            UserName: req.user,
+            body: "listaProductos",
+            index: "Usuario",
+            getProducts,
+            categoria
+          });
+
+
 
     } catch (error) {
         res.status(500).json({ message: error });
