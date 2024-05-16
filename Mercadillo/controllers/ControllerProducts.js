@@ -3,6 +3,7 @@ import { CreateItem,SearchByIdItem,SearchsItems,DeleteItem,UpdateItem} from '../
 export async function CreateProduct(req,res){
 
     const data = req.body
+    console.log(data)
     try {
         
         const newProduct = await CreateItem(data)

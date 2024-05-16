@@ -79,4 +79,5 @@ model Productos{
   id_Usuario Int
   categorias Categorias @relation(fields: [id_Categoria],references: [id])  
   usuarios Usuario  @relation(fields: [id_Usuario],references: [id])  
-}
+  }
+ 

@@ -10,7 +10,7 @@ import { PORT } from "./config.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-//import multer from "multer";
+import multer from "multer";
 const app = express();
 app.use(cors());
 app.use(morgan("dev"));
