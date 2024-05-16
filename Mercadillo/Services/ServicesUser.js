@@ -11,13 +11,14 @@ export async function CreateUser(data){
 }
 export async function SearchUser(Email) {
 
-    const userFound = await prisma.usuario.findUnique({
-      where: {
-        Email: Email,
-      },
-    });
-    return userFound
+  const userFound = await prisma.usuario.findUnique({
+    where: {
+      Email: Email,
+    },
+  });
+  return userFound
   }
+
 export async function EncryptPassword(password){
 
     const passwordHash = await bcrypt.hash(password,10)

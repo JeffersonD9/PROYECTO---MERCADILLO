@@ -15,10 +15,8 @@ async function Register(req,res){
     try {    
         
        const passwordHash = await bcrypt.hash(Password,10)
-       console.log(req.file.originalname)
        const dataImagen =  req.file.originalname
        const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(dataImagen)));
-
 
        const newUser = await prisma.usuario.create({ 
             data:{

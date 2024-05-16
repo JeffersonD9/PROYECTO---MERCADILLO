@@ -1,16 +1,11 @@
+import { expresiones } from "./expresiones.js";
 import { convertirUpperCamelCase } from "./upperCamelCase.js";
+
 const formulario = document.querySelector("#formulario");
 const inputs = document.querySelectorAll(" #formulario input");
 let notificacion = document.getElementById("notificacion");
+const fileInput = document.querySelector("#imagen");
 
-const expresiones = {
-  username: /^[a-zA-Z0-9_\-]{4,30}$/, // Letras, numeros, guion y guion_bajo
-  nombre: /^[a-zA-ZÀ-ÿ\s]{1,30}$/, // Letras y espacios, pueden llevar acentos.
-  apellido: /^[a-zA-ZÀ-ÿ\s]{1,30}$/, // Letras y espacios, pueden llevar acentos.
-  password: /^.{4,20}$/, // 4 a 20 digitos.
-  celular: /^.{10,15}$/, // 4 a 20 digitos.
-  email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
-};
 
 const campos = {
   username: false,
@@ -19,6 +14,7 @@ const campos = {
   email: false,
   apellido: false,
   celular: false,
+  imagen: false,
 };
 
 const validarFormulario = (e) => {
@@ -40,6 +36,22 @@ const validarFormulario = (e) => {
       break;
     case "celular":
       validarCampo(expresiones.celular, e.target, "celular");
+      break;
+    case "imagen":
+      let archivo = fileInput.files[0];
+      if (archivo) {
+        //Verificar si cumple con al expresion regular
+        document
+          .querySelector(`#grupo_imagen .formulario__input-error`)
+          .classList.remove("formulario__input-error-activo");
+        agregarIconoCorrecto("imagen"); //Agregamos el icono check
+      } else {
+        document
+          .querySelector(`#grupo_imagen .formulario__input-error`)
+          .classList.add("formulario__input-error-activo");
+        agregarIconoError(imagen); //Agregamos el icono x
+      }
+
       break;
   }
 };
@@ -67,7 +79,7 @@ function agregarIconoError(campo) {
 
 //Validar los campos Nombre-Apellido-Usuario-Email
 const validarCampo = (expresion, input, campo) => {
-  if (expresion.test(input.value.trim())) {
+  if (expresion.test(input.value.trim()) ) {
     //Verificar si cumple con al expresion regular
 
     document
@@ -102,11 +114,8 @@ async function registrarUsuario(e) {
   const Password = document.getElementById("password").value.trim();
   const Celular = document.getElementById("celular").value.trim();
 
-
- 
   try {
-    const fileInput = document.querySelector('input[type="file"]');
-    const formData = new FormData(); 
+    const formData = new FormData();
     formData.append("Nombres", Nombres);
     formData.append("Apellidos", Apellidos);
     formData.append("UserName", UserName);
@@ -114,14 +123,14 @@ async function registrarUsuario(e) {
     formData.append("Password", Password);
     formData.append("Celular", Celular);
 
-    formData.append("file", fileInput.files[0]); 
+    formData.append("file", fileInput.files[0]);
 
-    console.log(formData)
+    console.log(formData);
     const registroFetch = await fetch(
       "http://localhost:3000/MercadilloBucaramanga/Registrar",
       {
         method: "POST",
-        body:formData
+        body: formData,
       }
     );
     let json = await registroFetch.json();
@@ -189,5 +198,3 @@ formulario.addEventListener("submit", (e) => {
     });
   }
 });
-
-

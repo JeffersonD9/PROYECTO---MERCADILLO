@@ -82,8 +82,7 @@
                           <i class="bi bi-x-circle-fill icono"></i>
                         </div>
                         <p class="formulario__input-error">
-                          El celular debe consistir únicamente en números y
-                          tener una longitud máxima de 15 digitos
+                          Debe ingresar un número valido
                         </p>
                       </div>
                     </div>
@@ -105,8 +104,8 @@
                           <i class="bi bi-x-circle-fill icono"></i>
                         </div>
                         <p class="formulario__input-error">
-                          El usuario tiene que ser de 4 a 30 dígitos y solo
-                          puede contener numeros, letras y guion bajo.
+                          El usuario tiene que tener como minimo 4 dígitos y
+                          solo puede contener numeros, letras y guion bajo.
                         </p>
                       </div>
                     </div>
@@ -149,9 +148,27 @@
                           <i class="bi bi-x-circle-fill icono"></i>
                         </div>
                         <p class="formulario__input-error">
-                          La contraseña debe tener entre 4 y 20 caracteres y no
-                          debe contener espacios en blanco, incluyendo la barra
-                          espaciadora.
+                          La contraseña debe tener como minimo 10 caracteres y
+                          no debe contener espacios en blanco, incluyendo la
+                          barra espaciadora.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div id="grupo_imagen">
+                        <div class=" mb-2">
+                          <input
+                            type="file"
+                            name="imagen"
+                            accept="image/*"
+                            id="imagen"
+                            class="form-control"
+
+                          />
+                        </div>
+                        
+                        <p class="formulario__input-error">
+                          Debe Ingresar una Imagen
                         </p>
                       </div>
                     </div>
@@ -171,8 +188,6 @@
                       </div>
                     </div>
                   </div>
-                  <input type="file" accept="image/*" />
-                  <button class="prueba" type="submit">Enviar</button>
 
                   <script
                     type="module"

@@ -1,8 +1,10 @@
 import { CreateAccesToken } from "../Services/CreateToken.js";
+import bcrypt from "bcrypt";
 import {
   SearchAdmin,
   validatePassword,
   ValidateSessionAdmin,
+  SearchAdminUserName,
 } from "../Services/ServicesAdmin.js";
 
 export async function LoginAdmin(req, res) {
@@ -17,7 +19,7 @@ export async function LoginAdmin(req, res) {
     const token = await CreateAccesToken({
       id: userfound.id,
       role: role,
-      UserName: userfound.UserName,
+      userName: userfound.UserName,
     });
     res.cookie("token", token);
     res.status(201).send({
@@ -36,6 +38,8 @@ export async function ProfileAdmin(req, res) {
     return res.render("Administrador/administrador", {
       UserName: adminUserFound.UserName,
       index: "Admin",
+      body:"datosAdmin",
+      adminUserFound
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -44,8 +48,9 @@ export async function ProfileAdmin(req, res) {
 
 /* ***** ** *** * ***/
 import { PrismaClient } from "@prisma/client";
-import { SearchCategoria } from "../Services/ServicesCategoria.js";
+import { SearchUser } from "../Services/ServicesUser.js";
 const prisma = new PrismaClient();
+
 export async function MostrarUsuarios(req, res) {
   try {
     const usuarios = await prisma.usuario.findMany();
@@ -75,3 +80,29 @@ export async function EliminarUsuario(req, res) {
     console.log(error);
   }
 }
+
+export async function ActualizarAdmin(req, res) {
+  const { Email, Password, UserName, celular} = req.body;
+  console.log(req.body)
+  const id_adminbody = parseInt(req.params.id_admin, 10);
+
+  try {
+    const passwordHash = await bcrypt.hash(Password,10)
+    const actualizarAdmin= await prisma.admin.update({
+      where: { id: id_adminbody },
+      data: {Email:"Email",
+      Password:passwordHash,
+      celular,
+      UserName
+    }
+    });
+    res.status(200).json({
+      message: "Usuario actualizado",
+      data: actualizarAdmin,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error });
+    console.log(error);
+  }
+}
+

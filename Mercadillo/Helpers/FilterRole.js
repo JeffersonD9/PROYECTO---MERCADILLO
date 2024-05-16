@@ -4,10 +4,9 @@ import { SearchAdmin } from "../Services/ServicesAdmin.js";
 export async function FilterRole(email){
 
     try {       
-        const adminFound = await SearchAdmin(email)
-    
+        const adminFound = await SearchAdmin(email)    
         const salesFound = await SearchUser(email)
-
+        
         if (adminFound) {
             console.log("es Admin")
             return adminFound.id_Rol
@@ -17,7 +16,6 @@ export async function FilterRole(email){
             return salesFound.id_Rol
 
         } else {
-
             return null;
         }
         

@@ -12,6 +12,27 @@ export async function SearchAdmin(Email) {
   return userFound
 }
 
+export async function SearchAdminUserName(UserName) {
+
+  const userFound = await prisma.admin.findUnique({
+    where: {
+      UserName: UserName,
+    },
+  });
+  return userFound
+}
+
+
+export async function CreateCatalog(userfound,productFound){
+
+  const createCat = await prisma.catalogos.create({
+
+        Nombre: productFound.Nombre,
+        Descripcion : productFound.Descripcion,
+        id_usuario : userfound.id_usuario
+  })
+  return createCat
+}
 export async function validatePassword(userFound, Password) {
 
   const ismatch = await bcrypt.compare(Password, userFound.Password);

@@ -23,12 +23,6 @@
 </style>
 
 <div class="row mx-auto my-5">
-
-  <% if (result.length === 0) { %>
-   <p>No hay datos para esta categoría <%- result %></p>
-  <% } %>
-
-
   <% result.forEach((element, index) => { %>
   <div class="col-sm-5 col-md-5 col-lg-4 col-xl-3">
     <div id="carousel<%- index %>" class="carousel slide w-100">
