@@ -11,6 +11,18 @@ export async function SearchAdmin(Email) {
   });
   return userFound
 }
+
+export async function SearchAdminUserName(UserName) {
+
+  const userFound = await prisma.admin.findUnique({
+    where: {
+      UserName: UserName,
+    },
+  });
+  return userFound
+}
+
+
 export async function CreateCatalog(userfound,productFound){
 
   const createCat = await prisma.catalogos.create({

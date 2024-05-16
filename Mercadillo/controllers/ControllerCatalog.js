@@ -1,8 +1,9 @@
-import { SearchProduct } from "../Services/ServicesProducts";
+import { SearchProduct } from "../Services/ServicesProducts.js";
 
 export async function CreateCatalog(res) {
     try {
   
+      
       console.log("Funciona");
       const productos = await SearchProduct();
       console.log(productos);

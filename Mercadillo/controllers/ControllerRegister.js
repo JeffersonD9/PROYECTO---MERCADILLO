@@ -1,22 +1,34 @@
 import {PrismaClient} from '@prisma/client'
 import bcrypt from "bcrypt";
 import {CreateAccesToken} from "../Services/CreateToken.js"
+import fs from "fs"
+import path from "path";
+
 
 const prisma = new PrismaClient()
 
 async function Register(req,res){
     
-    const data = req.body
-    console.log(data)
+    const { Nombres, Apellidos, UserName, Email, Password, Celular } = req.body;
+    console.log(req.file.filename)
 
     try {    
+        
+       const passwordHash = await bcrypt.hash(Password,10)
+       const dataImagen =  req.file.originalname
+       const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(dataImagen)));
 
-       const passwordHash = await bcrypt.hash(data.Password,10)
-       data.Password = passwordHash; 
-       data.id_Rol = 1;
-       console.log(data)
        const newUser = await prisma.usuario.create({ 
-            data: data
+            data:{
+                Nombres, 
+                Apellidos, 
+                id_Rol:1,
+                UserName, 
+                Email, 
+                Password:passwordHash, 
+                Celular,
+                Imagen:base64String
+            }
        }) 
 
         const token = await CreateAccesToken({
@@ -26,9 +38,8 @@ async function Register(req,res){
        
         res.cookie('token',token);
         res.status(201).send({
-            UserName: data.UserName,
-            Email: data.Email,
-            DateCreated: data.DateCreated,
+            UserName,
+            Email,
             redirect: "Usuario"               
         });
        } 
@@ -38,7 +49,7 @@ async function Register(req,res){
            if(error.code == 'P2002' && error.meta.target.includes('Usuario_UserName_key')){
             res.status(409).json({
                    error:{
-                       message: `El usuario ${data.UserName} ya existe`,
+                       message: `El usuario ${UserName} ya existe`,
                        code: 'CONFLICT',
                        details: error.meta.target
                    }
@@ -47,7 +58,7 @@ async function Register(req,res){
            }else if(error.code == 'P2002' && error.meta.target.includes('Usuario_Email_key')){
             res.status(409).json( {
                    error:{
-                       message: `El correo ingresado ${data.Email} ya esta existe`,
+                       message: `El correo ingresado ${Email} ya esta existe`,
                        code: 'CONFLICT',
                        details: error.meta.target
                    }

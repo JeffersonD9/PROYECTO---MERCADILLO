@@ -19,7 +19,7 @@
     },
     "homepage": "https://github.com/JeffersonD9/PROYECTO---MERCADILLO/tree/JeffersonDev#readme",
     "devDependencies": {
-        "@prisma/client": "^5.11.0",
+        "@prisma/client": "^5.13.0",
         "bcrypt": "^5.1.1",
         "cookie-parser": "^1.4.6",
         "express": "^4.19.2",

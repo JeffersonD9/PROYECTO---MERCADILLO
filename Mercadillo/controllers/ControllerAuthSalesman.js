@@ -6,7 +6,6 @@ export async function LoginSalesman(req, res) {
 
   try {
     const userFound = await SearchUser(Email);
-
     const passwordOk = await validatePassword(userFound, Password);
     if (!passwordOk)
       return res.status(400).json({ message: "Invalidate Credentials" });
@@ -16,7 +15,7 @@ export async function LoginSalesman(req, res) {
     res.cookie("token", token);
     res.status(201).send({
       UserName: userFound.UserName,
-      redirect:"Usuario"
+      redirect:"Usuario",
     });
   } catch (error) {
     res.status(500).json({ message: error });
@@ -28,11 +27,11 @@ export async function ProfileSalesman(req, res) {
     console.log(req)
     const userFound = await ValidateSessionAdmin(req)
     if (!userFound) return res.status(400).json({ message: "User not Found" });
-    return res.render("vendedor",{
-      id: userFound.id,
-      UserName: userFound.UserName,
-      Email: userFound.Email,
-      index:'Usuario'
+   
+    return res.render("Vendedor/vendedor",{
+      UserName:userFound.UserName,
+      index:'Usuario',
+      body:'datosVendedor'
     });
 
   } catch (error) {

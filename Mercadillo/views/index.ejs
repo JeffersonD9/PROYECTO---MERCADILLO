@@ -1,213 +1,33 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <%- include('includes/header') -%>
-  </head>
-  <body>
-    <%- include('includes/nav') -%>
-    <div class="container-fluid mt-3">
-      <!-- Card-->
-      <div class="row mx-auto">
-        <div class="col-sm-4 col-md-4 col-lg-3 ">
-          <div class="card mb-3 with-card ">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpL4nOQxlvyXq9v8UJ6xAco0ula8gY3VUktZhEF_Wzwg&s"
-                class="card-img-top"
-                alt="..."
-              />
-            <div class="col-12">
-              <div class="card-body-padding">
-                <h4 class="card-title">Usuario</h4>
-                <h5 class="card-subtitle text-muted mb-2">Categoría</h5>
-                <div class="row row-cols-auto mb-2">
-                  <div>
-                    <!-- Contenido de la primera columna -->
-                    Frutas
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Veduras
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Hortalizas
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Legumbres
-                  </div>
-                </div>
-                <button class="btn w-100 btn-card-ingresar" type="submit">
-                  Ingresar
-                </button>
-              </div>
+
+<!-- Card-->
+<div class="row mx-auto my-3">
+
+  <% for (let key in dataCatalogo) { %>
+  
+  <div class="col-sm-4 col-md-4 col-lg-3">
+    <div class="card mb-3 with-card">
+      <img
+        src="/<%= dataCatalogo[key].Imagen %> "
+        class="card-img-top img-header-card"
+        alt="..."
+      />
+      <div class="col-12">
+        <div class="card-body-padding">
+          <a  href="/MercadilloBucaramanga/usuario/<%= key %>" class=" btn border-0 p-0 mb-2 nombreUsuario"><%= key %></a>
+          <h5 class="card-subtitle text-muted mb-2">Catálogo</h5>
+          <div class="row row-cols-auto mb-2">
+            <% dataCatalogo[key].catalogos.forEach(element => { %>
+              <a href="/MercadilloBucaramanga/usuario/<%= key %>#<%= element %>" class="btn border-0" > <%= element %> </a>
+            <% }) %>
             </div>
-          </div>
+          <a href="/MercadilloBucaramanga/usuario/<%= key %>" class="btn w-100 btn-card-ingresar" type="submit">
+            Ingresar
+          </a>
         </div>
-
-
-
-
-        <div class="col-sm-4 col-md-4 col-lg-3 ">
-          <div class="card mb-3 with-card ">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpL4nOQxlvyXq9v8UJ6xAco0ula8gY3VUktZhEF_Wzwg&s"
-                class="card-img-top"
-                alt="..."
-              />
-            <div class="col-12">
-              <div class="card-body-padding">
-                <h4 class="card-title">Usuario</h4>
-                <h5 class="card-subtitle text-muted mb-2">Categoría</h5>
-                <div class="row row-cols-auto mb-2">
-                  <div>
-                    <!-- Contenido de la primera columna -->
-                    Frutas
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Veduras
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Hortalizas
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Legumbres
-                  </div>
-                </div>
-                <button class="btn w-100 btn-card-ingresar" type="submit">
-                  Ingresar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-        <div class="col-sm-4 col-md-4 col-lg-3 ">
-          <div class="card mb-3 with-card ">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpL4nOQxlvyXq9v8UJ6xAco0ula8gY3VUktZhEF_Wzwg&s"
-                class="card-img-top"
-                alt="..."
-              />
-            <div class="col-12">
-              <div class="card-body-padding">
-                <h4 class="card-title">Usuario</h4>
-                <h5 class="card-subtitle text-muted mb-2">Categoría</h5>
-                <div class="row row-cols-auto mb-2">
-                  <div>
-                    <!-- Contenido de la primera columna -->
-                    Frutas
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Veduras
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Hortalizas
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Legumbres
-                  </div>
-                </div>
-                <button class="btn w-100 btn-card-ingresar" type="submit">
-                  Ingresar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-        <div class="col-sm-4 col-md-4 col-lg-3 ">
-          <div class="card mb-3 with-card ">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpL4nOQxlvyXq9v8UJ6xAco0ula8gY3VUktZhEF_Wzwg&s"
-                class="card-img-top"
-                alt="..."
-              />
-            <div class="col-12">
-              <div class="card-body-padding">
-                <h4 class="card-title">Usuario</h4>
-                <h5 class="card-subtitle text-muted mb-2">Categoría</h5>
-                <div class="row row-cols-auto mb-2">
-                  <div>
-                    <!-- Contenido de la primera columna -->
-                    Frutas
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Veduras
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Hortalizas
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Legumbres
-                  </div>
-                </div>
-                <button class="btn w-100 btn-card-ingresar" type="submit">
-                  Ingresar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-
-        <div class="col-sm-4 col-md-4 col-lg-3 ">
-          <div class="card mb-3   ">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpL4nOQxlvyXq9v8UJ6xAco0ula8gY3VUktZhEF_Wzwg&s"
-                class="card-img-top"
-                alt="..."
-              />
-            <div class="col-12">
-              <div class="card-body-padding">
-                <h4 class="card-title">Usuario</h4>
-                <h5 class="card-subtitle text-muted mb-2">Categoría</h5>
-                <div class="row row-cols-auto mb-2">
-                  <div>
-                    <!-- Contenido de la primera columna -->
-                    Frutas
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Veduras
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Hortalizas
-                  </div>
-                  <div>
-                    <!-- Contenido de la segunda columna -->
-                    Legumbres
-                  </div>
-                </div>
-                <button class="btn w-100 btn-card-ingresar" type="submit">
-                  Ingresar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
       </div>
     </div>
-  </body>
-</html>
+  </div>
+  <% } %>
+</div>
+
+

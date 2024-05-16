@@ -34,8 +34,19 @@ export async function GetProducts(req,res){
     try {
 
         const getProducts = await SearchsItems()
-        res.status(200).json({ message: "Productos", data: getProducts });
-        console.log(getProducts)
+        
+        //res.status(200).json({ message: "Productos", data: getProducts });
+        const categoria = await prisma.categorias.findMany();
+
+        res.render("Vendedor/vendedor", {
+            UserName: req.user,
+            body: "listaProductos",
+            index: "Usuario",
+            getProducts,
+            categoria
+          });
+
+
 
     } catch (error) {
         res.status(500).json({ message: error });
@@ -54,7 +65,7 @@ export async function DeleteProduct(req,res){
         
     } catch (error) {
         res.status(500).json({ message: error });
-        console.log(error)
+        console.log(error) 
     }
 }
 

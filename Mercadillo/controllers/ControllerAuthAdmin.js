@@ -1,8 +1,10 @@
 import { CreateAccesToken } from "../Services/CreateToken.js";
+import bcrypt from "bcrypt";
 import {
   SearchAdmin,
   validatePassword,
   ValidateSessionAdmin,
+  SearchAdminUserName,
 } from "../Services/ServicesAdmin.js";
 
 export async function LoginAdmin(req, res) {
@@ -34,8 +36,10 @@ export async function ProfileAdmin(req, res) {
     const adminUserFound = await ValidateSessionAdmin(req);
     if (!adminUserFound) res.status(401).json({ message: "User not Found" });
     return res.render("Administrador/administrador", {
-      UserName: adminUserFound.Email,
+      UserName: adminUserFound.UserName,
       index: "Admin",
+      body:"datosAdmin",
+      adminUserFound
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -44,14 +48,15 @@ export async function ProfileAdmin(req, res) {
 
 /* ***** ** *** * ***/
 import { PrismaClient } from "@prisma/client";
-import { SearchCategoria } from "../Services/ServicesCategoria.js";
+import { SearchUser } from "../Services/ServicesUser.js";
 const prisma = new PrismaClient();
+
 export async function MostrarUsuarios(req, res) {
   try {
     const usuarios = await prisma.usuario.findMany();
     if (!usuarios) res.status(401).json({ message: "User not Found" });
     res.render("Administrador/administrador", {
-      UserName: req.user.userName,
+      UserName: req.user,
       body: "listaUsuario",
       usuarios,
       index: "Admin",
@@ -76,94 +81,28 @@ export async function EliminarUsuario(req, res) {
   }
 }
 
-export async function EliminarCategoria(req, res) {
-  const id_categoria = parseInt(req.params.id_categoria, 10);
+export async function ActualizarAdmin(req, res) {
+  const { Email, Password, UserName, celular} = req.body;
+  console.log(req.body)
+  const id_adminbody = parseInt(req.params.id_admin, 10);
+
   try {
-    const data = await prisma.categorias.delete({
-      where: {
-        id: id_categoria,
-      },
-    });
-    res.status(200).json({ message: "Catgoria Borrada", data: data });
-  } catch (error) {
-    res.status(500).json({ message: error });
-    console.log(error);
-  }
-}
-
-export async function MostrarCategorias(req, res) {
-  try {
-    //Mostrar los categorias por cataglo
-    const categoriasConCatalogo = await prisma.categorias.findMany({
-      include: {
-        catalogos: true, // Incluir el catálogo relacionado
-      },
-      orderBy: {
-        id: 'desc', // Ordenar por id de forma descendente para obtener los últimos registros
-      },
-    });
-    console.log(categoriasConCatalogo);
-
-    //Traer los catalogos para mostrarlos en el select
-    const catalogos = await prisma.catalogos.findMany();
-
-    res.render("Administrador/administrador", {
-      UserName: req.user.userName,
-      body: "categoria",
-      index: "Admin",
-      categoriasConCatalogo,
-      catalogos, //Todos los catalogos
-    });
-  } catch (error) {
-    res.status(500).json({ message: error });
-    console.log(error);
-  }
-}
-
-export async function CrearCategorias(req, res) {
-  const { Nombre, id_Cat } = req.body;
-  try {
-    const encontrarCategoria = await SearchCategoria(Nombre);
-    if (encontrarCategoria) {
-      return res
-        .status(400)
-        .json({ message: "La categoria ya se encuentra creada" });
+    const passwordHash = await bcrypt.hash(Password,10)
+    const actualizarAdmin= await prisma.admin.update({
+      where: { id: id_adminbody },
+      data: {Email:"Email",
+      Password:passwordHash,
+      celular,
+      UserName
     }
-
-    const categorias = await prisma.categorias.create({
-      data: {
-        Nombre: Nombre,
-        id_Cat: id_Cat,
-      },
-    });
-    res
-      .status(200)
-      .json({ message: "Categoria Creada", categorias: categorias });
-  } catch (error) {
-    res.status(500).json({ message: error });
-    console.log(error);
-  }
-}
-
-export async function ActualizarCategorias(req, res) {
-  const { Nombre, id_Cat } = req.body;
-  const id_categoria = parseInt(req.params.id_categoria, 10);
-
-  try {
-
-    const actualizarCategoria = await prisma.categorias.update({
-      where: { id: id_categoria },
-      data: {
-        Nombre: Nombre,
-        id_Cat: id_Cat,
-      },
     });
     res.status(200).json({
-      message: "Categoria Actualizada Correctamente",
-      data: actualizarCategoria,
+      message: "Usuario actualizado",
+      data: actualizarAdmin,
     });
   } catch (error) {
     res.status(500).json({ message: error });
     console.log(error);
   }
 }
+
