@@ -19,6 +19,15 @@ export async function SearchUser(Email) {
   return userFound
   }
 
+  export async function SearchUserName(userName) {
+    const userFound = await prisma.usuario.findUnique({
+      where: {
+        UserName: userName,
+      },
+    });
+    return userFound
+    }
+
 export async function EncryptPassword(password){
 
     const passwordHash = await bcrypt.hash(password,10)

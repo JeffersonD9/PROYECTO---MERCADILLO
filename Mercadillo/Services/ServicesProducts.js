@@ -9,10 +9,14 @@ export async function CreateItem(data){
   return product
 }
 
-export async function SearchByIdItem(id_categoria,id){
+export async function SearchByIdItem(id_categoria,nombre,id_usuario){
 
- const productfound = prisma.productos.findUnique({
-    where: {id:id,id_Categoria:id_categoria},
+ const productfound = prisma.productos.findMany({
+    where: {
+      Nombre:nombre,
+      id_Categoria:id_categoria,
+      id_Usuario:id_usuario
+    },
 })
 return productfound
 }
@@ -22,19 +26,30 @@ export async function SearchsItems(){
   return getProducts
 }
 
-export async function DeleteItem(id_categoria,id){
+export async function DeleteItem(id){
 
   const deleteProduct = await prisma.productos.delete({
-    where:{id:id, id_Categoria: id_categoria},
+    where:{id:id},
 })
 return deleteProduct
 }
 
-export async function UpdateItem(id_categoria,id,data){
+export async function UpdateItem(id_producto,data,id_Categoria,id_Usuario,Imagen){
+  const { Nombre, Descripcion, Precio, Presentacion } = data;
+  const Disponibilidad = !!Number(data.Disponibilidad);
 
   const updateProduct = await prisma.productos.update({
-    where:{id:id, id_Categoria: id_categoria},
-    data: data
+    where:{id:id_producto},
+    data: {
+      Nombre,
+      Descripcion,
+      Precio,
+      Presentacion,
+      Disponibilidad,
+      id_Categoria,
+      id_Usuario,
+      Imagen
+    }
 })
 return updateProduct
 }

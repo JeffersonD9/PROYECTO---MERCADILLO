@@ -131,7 +131,6 @@ inputs.forEach((input) => {
 
 btnActualizarCampos.addEventListener("click", (e) => {
     const elementoConClase = document.querySelector(".formulario__input-error-activo");
-    console.log(elementoConClase)
     if(password.value !=="" && usuario.value !=="" && celular.value !==""&& correo.value !==""  && elementoConClase === null ){
         campos.password = true,
         campos.usuarioAdmin = true,

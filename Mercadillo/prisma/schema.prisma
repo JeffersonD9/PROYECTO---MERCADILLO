@@ -13,7 +13,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-  model Usuario{
+
+
+model Usuario{
       id Int  @id @default(autoincrement())
       Nombres   String @db.VarChar(50)
       Apellidos String @db.VarChar(50) 
@@ -21,11 +23,11 @@ datasource db {
       Password   String @db.VarChar(200)
       Email  String  @unique   @db.VarChar(100)
       Celular  String @db.VarChar(10)
-      Imagen Bytes @db.VarBinary(255) 
+      Imagen String
       DateCreated  DateTime @default(now())
       id_Rol Int 
       roles Roles @relation(fields: [id_Rol],references: [id])
-      productos Productos []
+      productos Productos[]
   }
 
 model Roles{
@@ -33,27 +35,26 @@ model Roles{
     id Int @id @default(autoincrement())
     Nombre String @db.VarChar(50) 
     usuarios Usuario[] 
-    admins Admin[]
+    Admins Admin[]
+}
+model Catalogos {
+  id          Int         @id @default(autoincrement())
+  Nombre      String      @unique @db.VarChar(50)
+  Descripcion String?     @db.VarChar(150)
+  id_Admin    Int
+  categorias  Categorias[]
+  Admins      Admin       @relation(fields: [id_Admin], references: [id])
 }
 
-model Catalogos{
-
-   id Int @id @default(autoincrement())
-   Nombre String   @db.VarChar(50)
-   Descripcion String?  @db.VarChar(150)
-   categorias Categorias[]
+model Categorias {
+  id          Int         @id @default(autoincrement())
+  Nombre      String      @unique @db.VarChar(100)
+  productos   Productos[]
+  id_Cat      Int
+  id_Admin    Int
+  catalogos   Catalogos   @relation(fields: [id_Cat], references: [id])
+  Admins      Admin       @relation(fields: [id_Admin], references: [id])
 }
-
-
-model Categorias{
-
-  id Int @id @default(autoincrement())
-  Nombre String @unique  @db.VarChar(100) 
-  productos Productos[]
-  id_Cat Int 
-  catalogos Catalogos @relation(fields: [id_Cat],references: [id])  
-}
-
 
 model Admin{
 
@@ -64,6 +65,8 @@ model Admin{
   celular  String @db.VarChar(10)
   id_Rol Int
   roles Roles @relation(fields: [id_Rol],references: [id])
+  catalogos Catalogos []
+  categorias Categorias[]
 }
 
 model Productos{
@@ -74,10 +77,9 @@ model Productos{
   Disponibilidad Boolean 
   Precio   String @db.VarChar(20)
   Presentacion   String @db.VarChar(50)
-  Imagen Bytes @db.VarBinary(255)
+  Imagen String
   id_Categoria Int
   id_Usuario Int
   categorias Categorias @relation(fields: [id_Categoria],references: [id])  
-  usuarios Usuario  @relation(fields: [id_Usuario],references: [id])  
+  usuarios Usuario  @relation(fields: [id_Usuario],references: [id], onDelete: Cascade)
   }
- 

@@ -10,13 +10,13 @@ const prisma = new PrismaClient()
 async function Register(req,res){
     
     const { Nombres, Apellidos, UserName, Email, Password, Celular } = req.body;
-    console.log(req.file.filename)
 
+    
     try {    
         
        const passwordHash = await bcrypt.hash(Password,10)
-       const dataImagen =  req.file.originalname
-       const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(dataImagen)));
+      // const dataImagen =  req.file.originalname
+      // const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(dataImagen)));
 
        const newUser = await prisma.usuario.create({ 
             data:{
@@ -27,7 +27,7 @@ async function Register(req,res){
                 Email, 
                 Password:passwordHash, 
                 Celular,
-                Imagen:base64String
+                Imagen:req.file.path 
             }
        }) 
 

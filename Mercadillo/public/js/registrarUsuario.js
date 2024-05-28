@@ -124,7 +124,7 @@ async function registrarUsuario(e) {
     formData.append("Celular", Celular);
 
     formData.append("file", fileInput.files[0]);
-
+    
     console.log(formData);
     const registroFetch = await fetch(
       "http://localhost:3000/MercadilloBucaramanga/Registrar",

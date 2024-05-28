@@ -9,7 +9,7 @@ export async function EliminarCategoria(req, res) {
           id: id_categoria,
         },
       });
-      res.status(200).json({ message: "Producto Borrado", data: data });
+      res.status(200).json({ message: "Categoría Borrada", data: data });
     } catch (error) {
       res.status(500).json({ message: error });
       console.log(error);
@@ -22,6 +22,7 @@ export async function EliminarCategoria(req, res) {
       const categoriasConCatalogo = await prisma.categorias.findMany({
         include: {
           catalogos: true, // Incluir el catálogo relacionado
+          Admins:true
         },
         orderBy: {
           id: 'desc', // Ordenar por id de forma descendente para obtener los últimos registros
@@ -33,9 +34,9 @@ export async function EliminarCategoria(req, res) {
       const catalogos = await prisma.catalogos.findMany();
   
       res.render("Administrador/administrador", {
-        UserName: req.user,
+        //UserName: req.user,
         body: "categoria",
-        index: "Admin",
+        //index: "Admin",
         categoriasConCatalogo,
         catalogos, //Todos los catalogos
       });
@@ -46,24 +47,25 @@ export async function EliminarCategoria(req, res) {
   }
   
   export async function CrearCategorias(req, res) {
-    const { Nombre, id_Cat } = req.body;
+    const { Nombre, id_Cat,id_Admin } = req.body;
     try {
-      const encontrarCategoria = await SearchCategoria(Nombre);
+      const encontrarCategoria = await SearchCategoria(Nombre,id_Cat);
       if (encontrarCategoria) {
         return res
           .status(400)
-          .json({ message: "La categoria ya se encuentra creada" });
+          .json({ message: "La categoría ya se encuentra creada" });
       }
   
       const categorias = await prisma.categorias.create({
         data: {
           Nombre: Nombre,
           id_Cat: id_Cat,
+          id_Admin:id_Admin
         },
       });
       res
         .status(200)
-        .json({ message: "Categoria Creada", categorias: categorias });
+        .json({ message: "Categoría Creada", categorias: categorias });
     } catch (error) {
       res.status(500).json({ message: error });
       console.log(error);
@@ -75,7 +77,7 @@ export async function EliminarCategoria(req, res) {
     const id_categoria = parseInt(req.params.id_categoria, 10);
   
     try {
-      const encontrarCategoria = await SearchCategoria(Nombre);
+      const encontrarCategoria = await SearchCategoria(Nombre,id_Cat);
       if (encontrarCategoria) {
         return res
           .status(400)
