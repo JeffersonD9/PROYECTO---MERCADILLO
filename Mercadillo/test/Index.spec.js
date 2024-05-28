@@ -4,7 +4,7 @@ import request from 'supertest'
 describe('POST /Login', () => { 
 
     test('Debería responder con codigo 200',async()=>{
-       const responder =  await request(app).post('/MercadilloBucaramanga/Login').send()
+       const responder =  await request(app).get('/MercadilloBucaramanga/Login').send()
      // console.log(responder)
     })
 })
