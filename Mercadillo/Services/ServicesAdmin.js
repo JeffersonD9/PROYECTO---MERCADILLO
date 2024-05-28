@@ -34,10 +34,26 @@ export async function CreateCatalog(userfound,productFound){
   return createCat
 }
 export async function validatePassword(userFound, Password) {
-
   const ismatch = await bcrypt.compare(Password, userFound.Password);
   return ismatch
 }
+
+
+export async function UpdateUser(userName, Password) {
+
+const usuarioActualizado = await prisma.usuario.update({
+  where: {
+    UserName: userName // 
+  },
+  data: {
+    Password: Password // Nueva contraseña que deseas establecer
+  }
+});
+return usuarioActualizado
+
+}
+
+
 
 export async function ValidateSessionAdmin(req) {
   

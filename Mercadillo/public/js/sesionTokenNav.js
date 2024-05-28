@@ -4,10 +4,7 @@ const sesion = document.querySelector("#sesion")
 const miEnlaceUsuario = document.querySelector("#miEnlaceUsuario")
 
 
-
-
 const token = getCookie("token");
-
 function isTokenExpired (token){
 if(!token){
   usuario.textContent = "Ingresar"
@@ -17,13 +14,13 @@ if(!token){
   const arrayToken = token.split('.')
   const tokenPayload = JSON.parse(atob(arrayToken[1]));
   sesion.textContent = "Cerrar Sesion"
-  console.log(tokenPayload)
 
   if(tokenPayload.role === 1){
-    miEnlaceUsuario.href = "/MercadilloBucaramanga/Vendedor";
+    miEnlaceUsuario.href = "/MercadilloBucaramanga/Usuario";
   }else if(tokenPayload.role === 2){
     miEnlaceUsuario.href = "/MercadilloBucaramanga/Admin";
   }
+
 }
 }
 

@@ -21,7 +21,7 @@ __dirname = __dirname.slice(1);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views")); //Identificar la carpeta views
 app.use(express.static(path.join(__dirname, "public"))); //Identificar la carpeta public
-app.use(express.static(path.join(__dirname, "dbimagenes"))); //Identificar la carpeta dbimagenes
+app.use( "/imagenes", express.static(path.join(__dirname, "imagenes"))); //Identificar la carpeta imagenes
 
 const uploadPath = path.join(__dirname, 'public', 'Image_Products');
 console.log(uploadPath)

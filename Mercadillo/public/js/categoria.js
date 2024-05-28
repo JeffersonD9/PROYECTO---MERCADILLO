@@ -1,20 +1,37 @@
 import { convertirUpperCamelCase } from "../js/upperCamelCase.js";
+import {
+  eliminarErrores,
+  activarModalCrear,
+  desactivarModalCrear,
+  desactivarModalEliminar,
+  activarModalEliminar
+} from "../js/modal.js";
+import { expresiones,getCookie } from "./expresiones.js";
+import {load} from "../js/dataTabla.js";
+load();
+
+
+
 const catalogo = document.querySelector(".select-catalogo");
 const select = document.querySelectorAll("#catalogo");
 const url = "http://localhost:3000/MercadilloBucaramanga/Admin/Categorias/";
-const bodyTable = document.querySelector("table");
+const btnModalCrearCerrar = document.querySelector(".btnModalCrearCerrar");
 const btnModalEliminar = document.querySelector(".btnModalEliminar");
-const eliminarModalLabel = document.querySelector("#eliminarModalLabel");
+const btnModalEliminarCerrar = document.querySelector(".btnModalEliminarCerrar");
+
+const token = getCookie("token");
+const arrayToken = token.split(".");
+const tokenPayload = JSON.parse(atob(arrayToken[1]));
+
+
 let notificacion = document.getElementById("notificacion");
-let notificacionLlenarCampos = document.getElementById("notificacionLlenarCampos")
+let notificacionLlenarCampos = document.getElementById(
+  "notificacionLlenarCampos"
+);
 let idFila;
 let filaTabla;
-const modalCategoria = new bootstrap.Modal(
-  document.getElementById("modalCategoria")
-);
-const modalEliminar = new bootstrap.Modal(
-  document.getElementById("eliminarModal")
-);
+
+
 const formCategoria = document.querySelector("form");
 let nombreCategoria = document.querySelector("#categoria");
 const btnCrear = document.querySelector("#btn-crear");
@@ -23,80 +40,54 @@ let idCatalogo;
 let opcion = "";
 let idForm = 0;
 
-const dataTablaOpciones = {
-  pageLength: 10,
-  language: {
-    lengthMenu: "Mostrar _MENU_ registros por página",
-    zeroRecords: "Ningún usuario encontrado",
-    info: " _START_ a _END_ de un total de _TOTAL_ registros",
-    infoEmpty: "Ningún usuario encontrado",
-    infoFiltered: "(filtrados desde _MAX_ registros totales)",
-    search: "Buscar:",
-    loadingRecords: "Cargando...",
-    paginate: {
-      first: "Primero",
-      last: "Último",
-      next: "Siguiente",
-      previous: "Anterior",
-    },
-  },
-};
 
 let campos = {
   nombreDeCategoria: false,
   selectCatalogo: false,
 };
 
-const expresiones = {
-  categoria: /^[a-zA-ZÀ-ÿ\s]{1,30}$/,
-  catalogo: "",
-};
-
 // Manejar el evento de cambio en el select
 let catalogoSeleccionado;
-catalogo.addEventListener("change", function() {
+catalogo.addEventListener("change", function () {
   // Obtener el índice de la opción seleccionada
   var selectedIndex = catalogo.selectedIndex;
 
   // Obtener el texto de la opción seleccionada
-   catalogoSeleccionado = catalogo.options[selectedIndex].text;
+  catalogoSeleccionado = catalogo.options[selectedIndex].text;
 
-  // Mostrar el texto seleccionado en la consola (puedes usarlo como necesites)
-  console.log("Texto seleccionado:", catalogoSeleccionado);
+  
 });
-
-
 
 const validarFormulario = (e) => {
   switch (e.target.name) {
     case "categoria":
-      console.log(e.target.value.trim())
+     
       if (!expresiones.categoria.test(e.target.value.trim())) {
         document
           .querySelector(`#grupocategoria .formulario__input-error`)
           .classList.add("formulario__input-error-activo");
-          campos['nombreDeCategoria']= false;
+        campos["nombreDeCategoria"] = false;
       } else {
         document
           .querySelector(`#grupocategoria .formulario__input-error`)
           .classList.remove("formulario__input-error-activo");
-          campos['nombreDeCategoria']= true;
+        campos["nombreDeCategoria"] = true;
       }
-      
+
       break;
     case "catalogo":
-      if (e.target.value === expresiones.catalogo) {
+      if (e.target.value === expresiones.categoriaCatalogo) {
         document
           .querySelector(`#grupocatalogo .formulario__input-error`)
           .classList.add("formulario__input-error-activo");
-          campos['selectCatalogo'] = false;
+        campos["selectCatalogo"] = false;
       } else {
         document
           .querySelector(`#grupocatalogo .formulario__input-error`)
           .classList.remove("formulario__input-error-activo");
-          console.log("aca nombre catalogo")
-          console.log(campos)
-          campos['selectCatalogo'] = true;
+        console.log("aca nombre catalogo");
+        console.log(campos);
+        campos["selectCatalogo"] = true;
       }
       break;
   }
@@ -107,6 +98,11 @@ nombreCategoria.addEventListener("keyup", validarFormulario);
 nombreCategoria.addEventListener("click", validarFormulario);
 catalogo.addEventListener("click", validarFormulario);
 
+//cerrar el modal crear Categoria cuando de cancelar
+btnModalCrearCerrar.addEventListener("click", desactivarModalCrear);
+
+//cerrar el modal eliminar cuando se de cancelar
+btnModalEliminarCerrar.addEventListener("click", desactivarModalEliminar)
 catalogo.addEventListener("click", () => {
   select.forEach((e) => {
     idCatalogo = e.value;
@@ -115,17 +111,16 @@ catalogo.addEventListener("click", () => {
 
 btnCrear.addEventListener("click", () => {
   formCategoria.reset();
-  activarModalCategoria();
-  campos['selectCatalogo'] = false;
-  campos['nombreDeCategoria'] = false;
+  eliminarErrores();
+  activarModalCrear();
+  campos["selectCatalogo"] = false;
+  campos["nombreDeCategoria"] = false;
   notificacionLlenarCampos.innerHTML = ``;
   opcion = "crear";
 });
 
 function eliminarCategoria() {
   desactivarModalEliminar();
-  console.log(idFila)
-  console.log(filaTabla, " Fila tabla");
   fetch(url + idFila, {
     method: "DELETE",
   })
@@ -139,50 +134,17 @@ function eliminarCategoria() {
       filaTabla.parentNode.removeChild(filaTabla); //Elimina la fila
       notificacionExitosa(data);
       tiempoNotificacion();
-      
     })
     .catch((error) => {
-      notificacionAlerta(error);
+      notificacionAlerta(error);  
     });
 }
 
 
+btnModalEliminar.addEventListener("click", () => {
+  eliminarCategoria();
+});
 
-
-
-
-
-
-
-
-
-function activarModalEliminar( nombreCategoria) {
-  modalEliminar.show();
-  eliminarModalLabel.textContent = `Esta seguro de Eliminar la categoria ${nombreCategoria}`;
-}
-
-btnModalEliminar.addEventListener("click", ()=>{
-  console.log("aca")
-  eliminarCategoria()
-}
-);
-
-
-function desactivarModalEliminar() {
-  modalEliminar.hide();
-}
-
-function activarModalCategoria() {
-  
-  if(nombreCategoria.value != "" && catalogo.value != ""){
-    campos['nombreDeCategoria'] = true;
-    campos['selectCatalogo'] = true;
-  }
-  modalCategoria.show();
-}
-function desactivarModalCategoria() {
-  modalCategoria.hide();
-}
 
 function notificacionAlerta(data) {
   notificacion.classList.remove("alert-success", "d-none");
@@ -212,8 +174,9 @@ document.addEventListener("click", (e) => {
   }
 });
 
-document.addEventListener("click",(e)=>{
+document.addEventListener("click", (e) => {
   if (e.target.classList.contains("btn-actualizar-usuario")) {
+    eliminarErrores();
     const fila = e.target.parentNode.parentNode;
     idForm = fila.children[0].innerHTML; //traer el indice de la tabla
     idFila = fila;
@@ -227,15 +190,12 @@ document.addEventListener("click",(e)=>{
       }
     }
     opcion = "actualizar";
-    activarModalCategoria();
+    activarModalCrear();
   }
-})
+});
 
-
-
-
-function actualizarOCrear(){
-  if (opcion == "crear") {
+function actualizarOCrear() {
+  if (opcion === "crear") {
     fetch(url, {
       method: "POST",
       headers: {
@@ -244,6 +204,7 @@ function actualizarOCrear(){
       body: JSON.stringify({
         Nombre: convertirUpperCamelCase(nombreCategoria.value).trim(),
         id_Cat: parseInt(catalogo.value),
+        id_Admin:tokenPayload.id
       }),
     })
       .then((response) => {
@@ -259,7 +220,7 @@ function actualizarOCrear(){
         return response.json();
       })
       .then((data) => {
-        console.log(data)
+        console.log(data);
         var nuevaFila = `
         <tr>
           <td>${data.categorias.id}</td>
@@ -272,10 +233,8 @@ function actualizarOCrear(){
         </tr>
       `;
 
-      // Agregar la nueva fila al final de la tabla
-      $("#table tbody").prepend(nuevaFila);
-
- 
+        // Agregar la nueva fila al final de la tabla
+        $("#table tbody").prepend(nuevaFila);
 
         notificacionExitosa(data);
         tiempoNotificacion();
@@ -306,9 +265,9 @@ function actualizarOCrear(){
         return response.json();
       })
       .then((data) => {
-
-        
-        idFila.cells[1].textContent = convertirUpperCamelCase(nombreCategoria.value).trim();
+        idFila.cells[1].textContent = convertirUpperCamelCase(
+          nombreCategoria.value
+        ).trim();
         idFila.cells[2].textContent = catalogoSeleccionado;
         notificacionExitosa(data);
         tiempoNotificacion();
@@ -321,19 +280,19 @@ function actualizarOCrear(){
 
 formCategoria.addEventListener("submit", (e) => {
   e.preventDefault();
-  console.log(campos.nombreDeCategoria)
-  if(campos.nombreDeCategoria && campos.selectCatalogo ){
+  const elementoConClase = document.querySelector(".formulario__input-error-activo");
+  if(nombreCategoria.value !=="" && select.value !=="" && elementoConClase === null ){
+    campos.nombreDeCategoria= true;
+    campos.selectCatalogo = true
+
+  }
+  if (campos.nombreDeCategoria && campos.selectCatalogo) {
     actualizarOCrear();
-    desactivarModalCategoria();
-  }else{
+    desactivarModalCrear();
+  } else {
     notificacionLlenarCampos.classList.remove("d-none");
-    notificacionLlenarCampos.classList.add("alert-danger","d-block");
+    notificacionLlenarCampos.classList.add("alert-danger", "d-block");
     notificacionLlenarCampos.innerHTML = `Debe llenar todos los campos`;
   }
 });
 
-window.addEventListener("load", () => {
-  let prueba = new DataTable(bodyTable, dataTablaOpciones)
-    .order([0, "dec"])
-    .draw();
-});

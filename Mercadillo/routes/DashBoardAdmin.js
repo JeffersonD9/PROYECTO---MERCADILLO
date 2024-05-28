@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {ProfileAdmin,MostrarUsuarios,EliminarUsuario,ActualizarAdmin} from '../controllers/ControllerAuthAdmin.js'
 import { MostrarCategorias,EliminarCategoria,CrearCategorias, ActualizarCategorias} from "../controllers/ControllerCategoria.js";
-import { CreateCatalog } from "../controllers/ControllerCatalog.js";
+import { CreateCatalog,MostrarCatalog,ActualizarCatalogo,EliminarCatalogo } from "../controllers/ControllerCatalog.js";
 import {authRequired} from '../MiddleWares/ValidateToken.js'
 
 const router = Router()
@@ -21,10 +21,10 @@ router.put('/Admin/Categorias/:id_categoria',authRequired,ActualizarCategorias)
 router.delete('/Admin/Categorias/:id_categoria',authRequired,EliminarCategoria)
 
 
-
-
-router.get('/Admin/Catalogo',authRequired,CreateCatalog)
-
+router.post('/Admin/Catalogos',authRequired,CreateCatalog)
+router.get('/Admin/Catalogos',authRequired,MostrarCatalog)
+router.put('/Admin/Catalogos/:id_catalogo',authRequired,ActualizarCatalogo)
+router.delete('/Admin/Catalogos/:id_catalogo',authRequired,EliminarCatalogo)
 
 
 

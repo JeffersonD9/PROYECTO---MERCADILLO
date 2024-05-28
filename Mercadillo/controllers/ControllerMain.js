@@ -3,6 +3,8 @@ const prisma = new PrismaClient();
 import fs from "fs";
 import path from "path";
 
+
+
 export async function ListarDatosPrincipal(req, res) {
   try {
     const usuariosConCategoriasUnicas = await prisma.$queryRaw`
@@ -15,15 +17,17 @@ export async function ListarDatosPrincipal(req, res) {
     const dataCatalogo = {};
 
     let i = 0;
+    console.log(usuariosConCategoriasUnicas)
     usuariosConCategoriasUnicas.forEach((row) => {
       const { UserName, Nombre, Imagen, id } = row;
       // Si es la primera vez que encontramos este usuario, inicializamos su entrada en el objeto
-      if (!dataCatalogo[UserName]) {
-        fs.writeFileSync(path.join("./dbimagenes/" + id + ".png"), Imagen);
-        const imgUsuario = fs.readdirSync(path.join("./dbimagenes/"));
+     
+       if (!dataCatalogo[UserName]) {
+        //fs.writeFileSync(path.join("./dbimagenes/" + id + ".png"), Imagen);
+       // const imgUsuario = fs.readdirSync(path.join("./dbimagenes/"));
         dataCatalogo[UserName] = {
           catalogos: [],
-          Imagen: `${id}.png`,
+          Imagen,
           id,
         };
         i++;
@@ -106,11 +110,11 @@ export async function FiltrarCatalogosPrincipal(req, res) {
 
         // Si es la primera vez que encontramos este usuario, inicializamos su entrada en el objeto
         if (!dataCatalogo[UserName]) {
-          fs.writeFileSync(path.join("./dbimagenes/" + id + ".png"), Imagen);
-          const imgUsuario = fs.readdirSync(path.join("./dbimagenes/"));
+          //fs.writeFileSync(path.join("./dbimagenes/" + id + ".png"), Imagen);
+          //const imgUsuario = fs.readdirSync(path.join("./dbimagenes/"));
           dataCatalogo[UserName] = {
             catalogos: [],
-            Imagen: `${id}.png`,
+            Imagen: Imagen,
             id,
           };
           i++;
@@ -168,7 +172,7 @@ export async function FiltrarCategoriaPrincipal(req, res) {
 
     // Ordenar los productos disponibles primero en cada usuario
     result.forEach((usuario) => {
-      usuario.Imagen = `${usuario.id}.png`; //le asigno la imagen al usuario
+      usuario.Imagen = usuario.Imagen; //le asigno la imagen al usuario
       // console.log("USUARIO ", usuario, " FIN USUARIO");
       usuario.productos.sort((a, b) => {
         // Ordenar por disponibilidad (primero los disponibles)
@@ -183,7 +187,7 @@ export async function FiltrarCategoriaPrincipal(req, res) {
     });
 
     // Procesar las imágenes asociadas a cada usuario (ejemplo)
-    for (const usuario of result) {
+  /*  for (const usuario of result) {
       for (const producto of usuario.productos) {
         const { Imagen, id } = producto; // Suponiendo que Imagen es la imagen en formato binario y 'id' es un identificador único
         // console.log(producto, " Imagen");
@@ -193,10 +197,10 @@ export async function FiltrarCategoriaPrincipal(req, res) {
           fs.writeFileSync(path.join("./dbimagenes/" + id + ".png"), Imagen);
         }
       }
-    }
+    }*/
 
     // Leer archivos de imágenes en el directorio
-    const imgFiles = fs.readdirSync(path.join("./dbimagenes/"));
+   // const imgFiles = fs.readdirSync(path.join("./dbimagenes/"));
 
     res.render("main", {
       body: "datosFiltroCategoria",
@@ -204,6 +208,8 @@ export async function FiltrarCategoriaPrincipal(req, res) {
       titulo,
       UserName: req.user 
     });
+
+    console.log(result)
   } catch (error) {
     console.log(error);
   }
@@ -216,7 +222,7 @@ export async function MostrarInformacionUsuaro(req, res) {
     const usuarios = await prisma.usuario.findMany(); //Encontrar los usuarios
 
     const dataUsuario = await prisma.$queryRaw`
-  SELECT ct.Nombre AS Catalogo, c.Nombre AS Categoria, u.UserName, u.Nombres AS NombresUsuario, u.Apellidos AS ApellidosUsuario, u.Celular AS Celular, u.Imagen, u.id AS UsuarioId, p.Nombre AS NombreProducto, p.descripcion AS Descripcion, p.precio AS Precio, p.disponibilidad AS Disponibilidad 
+  SELECT ct.Nombre AS Catalogo, c.Nombre AS Categoria, u.UserName, u.Nombres AS NombresUsuario, u.Apellidos AS ApellidosUsuario, u.Celular AS Celular, u.Imagen, u.id AS UsuarioId, p.Nombre AS NombreProducto, p.Imagen AS ImagenProducto, p.descripcion AS Descripcion, p.precio AS Precio, p.disponibilidad AS Disponibilidad 
   FROM catalogos ct
   JOIN categorias c ON ct.id = c.id_Cat
   JOIN productos p ON p.id_Categoria = c.id
@@ -254,15 +260,20 @@ export async function MostrarInformacionUsuaro(req, res) {
           Descripcion,
           Precio,
           Disponibilidad,
+          ImagenProducto
         } = row;
 
+        
         const producto = {
           NombreProducto,
           Descripcion,
           Precio,
           Disponibilidad,
+          ImagenProducto
         };
 
+       
+      
         // Verificamos si el usuario ya existe en dataUsuario
         if (!data[UserName]) {
           // Si el usuario no existe, lo inicializamos con su información básica y detalles
@@ -272,7 +283,7 @@ export async function MostrarInformacionUsuaro(req, res) {
           );
 
           data[UserName] = {
-            Imagen: `${UsuarioId}.png`,
+            Imagen: Imagen,
             UserName,
             NombresUsuario,
             ApellidosUsuario,

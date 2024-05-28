@@ -1,6 +1,13 @@
 import { CreateAccesToken } from "../Services/CreateToken.js";
-import { SearchUser,ValidateSessionAdmin } from "../Services/ServicesUser.js";
-import { validatePassword } from "../Services/ServicesAdmin.js";
+import {
+  SearchUser,
+  SearchUserName,
+  ValidateSessionAdmin,
+} from "../Services/ServicesUser.js";
+import { UpdateUser, validatePassword } from "../Services/ServicesAdmin.js";
+import { enviar_email } from "../templateCorreo/envioPassword.js";
+import bcrypt from "bcrypt";
+
 export async function LoginSalesman(req, res) {
   const { Email, Password } = req.body;
 
@@ -9,13 +16,17 @@ export async function LoginSalesman(req, res) {
     const passwordOk = await validatePassword(userFound, Password);
     if (!passwordOk)
       return res.status(400).json({ message: "Invalidate Credentials" });
-
-    const token = await CreateAccesToken({ id: userFound.id, userName:userFound.UserName });
+    const role = userFound.id_Rol;
+    const token = await CreateAccesToken({
+      id: userFound.id,
+      userName: userFound.UserName,
+      role: role,
+    });
 
     res.cookie("token", token);
     res.status(201).send({
       UserName: userFound.UserName,
-      redirect:"Usuario",
+      redirect: "Usuario",
     });
   } catch (error) {
     res.status(500).json({ message: error });
@@ -24,18 +35,70 @@ export async function LoginSalesman(req, res) {
 }
 export async function ProfileSalesman(req, res) {
   try {
-    console.log(req)
-    const userFound = await ValidateSessionAdmin(req)
+    const userFound = await ValidateSessionAdmin(req);
     if (!userFound) return res.status(400).json({ message: "User not Found" });
-   
-    return res.render("Vendedor/vendedor",{
-      UserName:userFound.UserName,
-      index:'Usuario',
-      body:'datosVendedor'
-    });
 
+    return res.render("Vendedor/vendedor", {
+      UserName: userFound.UserName,
+      index: "Usuario",
+      body: "datosVendedor",
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
-    console.log(error);
+  }
+}
+
+//Enviar contraseña al correo
+
+export async function EnviarCorreo(req, res) {
+  try {
+    const Email = req.body.Email;
+    console.log(req.body.Email);
+    const userFound = await SearchUser(Email);
+    if (!userFound) {
+      return res.status(400).json({ message: `Solicitud rechazada` });
+    }
+    const token = await CreateAccesToken({
+      id: userFound.id,
+      userName: userFound.UserName,
+    });
+    enviar_email(Email, token);
+    res.status(200).json({ message: "Correo Enviado" });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+}
+
+//form
+export async function FromCambiarPassword(req, res) {
+  return res.render("enviarTokenEmail");
+}
+
+export async function RestablecerPassword(req, res) {
+  return res.render("cambiarPassword");
+}
+
+
+export async function ActualizarPassword(req, res) {
+  try {
+    const { UserName,Password } = req.body;
+
+    console.log(req.body)
+    const userFound = await SearchUserName(UserName);
+    
+    if (!userFound)
+      return res.status(400).json({ message: "Invalidate Credentials" });
+
+    const passwordHash = await bcrypt.hash(Password,10)
+    const usuarioActualizado = await UpdateUser(UserName, passwordHash);
+    console.log(usuarioActualizado)
+    if (!usuarioActualizado) {
+      return res
+        .status(400)
+        .json({ message: "Error al actualizar el usuario" });
+    }
+    return res.status(200).send({redirect:"/MercadilloBucaramanga/Login"});
+  } catch (error) {
+    res.status(500).json({ message: error });
   }
 }

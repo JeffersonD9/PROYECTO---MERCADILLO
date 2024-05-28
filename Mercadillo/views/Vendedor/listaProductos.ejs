@@ -6,7 +6,7 @@
   <i class="bi bi-plus-lg"></i> Añadir Producto
 </a>
 
-<div class="container-fluid my-4">
+<div class="container-fluid my-4 table-responsive">
   <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
       <table class="table" id="table">
@@ -16,29 +16,30 @@
             <th scope="col">Nombre</th>
             <th scope="col">Descripción</th>
             <th scope="col">Disponibilidad</th>
+            <th scope="col">$Precio</th>
             <th scope="col">Categoria</th>
             <th scope="col">Presentacion</th>
             <th scope="col">Imagen</th>
+            <th scope="col">Acción</th>
+
           </tr>
         </thead>
         <tbody>
           <tr>
-            <% if (getProducts.length === 0) { %>
+            <% if (productos.length === 0) { %>
             <p>No hay productos</p>
-            <% } %> <% getProducts.forEach((producto)=>{ %>
-
+            <% } %> <% productos.forEach((producto)=>{ %>
+            <td><%- producto.id %></td>
             <td><%- producto.Nombre %></td>
-            <td><%- producto.Nombre %></td>
-            <td><%- producto.Descripción %></td>
-            <td><%- producto.Disponibilidad %></td>
-            <td><%- producto.Categoria %></td>
+            <td><%- producto.Descripcion %></td>
+            <td><%- producto.Disponibilidad ? 'Disponible' : 'No Disponible'  %></td>
+            <td><%- producto.Precio %></td>
+            <td><%- producto.categorias.Nombre %></td>
             <td><%- producto.Presentacion %></td>
-            <td><%- producto.Imagen %></td>
-
-            <td></td>
+            <td> <a  href="/<%- producto.Imagen %>" target="_blank"> <img class="img-vendedor-producto" src="/<%- producto.Imagen %>" alt=""> </a> </td>
             <td>
-              <a href="#" class="btn-eliminar-usuario">Eliminar</a>
-              <a href="#" class="btn-actualizar-usuario">Actualizar</a>
+              <a href="#" class="btn-eliminar-producto">Eliminar</a>
+              <a href="#" class="btn-actualizar-producto">Actualizar</a>
             </td>
           </tr>
           <% }); %>
@@ -51,22 +52,16 @@
 <div class="container-fluid">
   <div
     class="modal fade"
-    id="modalProducto"
+    id="modalCrear"
     tabindex="-1"
-    aria-labelledby="modalProductoLabel"
+    aria-labelledby="modalCrearLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalProductoLabel">Crear Producto</h5>
+          <h5 class="modal-title" id="modalCrearLabel">Crear Producto</h5>
           <p id="notificacionLlenarCampos"></p>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
         </div>
         <div class="modal-body">
           <form id="formulario">
@@ -88,12 +83,13 @@
               <label for="descripcionProducto" class="col-form-label"
                 >Descripción:</label
               >
-              <textarea
+              <input
+              type="text"
                 class="card-text form-control"
                 rows="2"
                 id="descripcionProducto"
                 name="descripcionProducto"
-              ></textarea>
+              ></input>
               <p class="formulario__input-error">
                 Debe ingresar una descripción
               </p>
@@ -112,14 +108,14 @@
                 <option value="" selected>Seleccionar</option>
 
                 <option value="1">Disponible</option>
-                <option value="2">No disponible</option>
+                <option value="0">No Disponible</option>
               </select>
               <p class="formulario__input-error">
                 Debe ingresar el estado del producto
               </p>
             </div>
             <div class="form-group" id="grupo_precio">
-              <label for="precio" class="col-form-label">Producto:</label>
+              <label for="precio" class="col-form-label">Precio:</label>
               <input
                 type="number"
                 class="form-control"
@@ -137,13 +133,25 @@
                 name="categoria"
               >
                 <option value="" selected>Seleccionar</option>
+                <% categoria.forEach((cateogoria) => { %>
+                <option value="<%= cateogoria.id%>"><%=cateogoria.Nombre %></option>
+                <% }); %>
 
-                <option value="1">numero</option>
               </select>
               <p class="formulario__input-error">
                 Debe seleccionar una Categoría
               </p>
             </div>
+            <div class="form-group" id="grupo_presentacion">
+                <label for="presentacion" class="col-form-label">Presentacion:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="presentacion"
+                  name="presentacion"
+                />
+                <p class="formulario__input-error">Ingresar informacion de la Presentacion del producto</p>
+              </div>
 
             <div id="grupo_imagenProducto ">
               <div class="mt-4">
@@ -162,7 +170,7 @@
             <div class="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                class="btn btn-secondary btnModalCrearCerrar"
                 data-bs-dismiss="modal"
               >
                 Cerrar
@@ -191,18 +199,13 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+     
       </div>
       <div class="modal-body">
         <h1 class="modal-title fs-5" id="eliminarModalLabel"></h1>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        <button type="button" class="btn btn-secondary btnModalCerrar" data-bs-dismiss="modal">
           Cerrar
         </button>
         <button type="button" class="btn btn-primary btnModalEliminar">
@@ -213,4 +216,4 @@
   </div>
 </div>
 
-<script src="/js/productos.js" type="module"></script>
+<script src="../../js/productos.js" type="module"></script>

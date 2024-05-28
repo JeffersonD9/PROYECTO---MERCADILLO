@@ -5,6 +5,14 @@ export const expresiones = {
     password: /^.{10,20}$/, // 4 a 20 digitos.
     celular: /^3\d{9}$/, // 4 a 20 digitos.
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
+    categoria: /^[a-zA-ZÀ-ÿ\s]{1,30}$/,
+    categoriaCatalogo: "",
+    catalogo: /^[a-zA-ZÀ-ÿ\s]{1,30}$/,
+    nombreProducto: /^[a-zA-ZÀ-ÿ\s]{1,30}$/,
+    disponibilidad: "",
+    descripcionProducto: /^.{1,200}$/,
+    presentacion: /^.{1,50}$/,
+    precio: /^\d{3,20}$/,
   };
 
 
