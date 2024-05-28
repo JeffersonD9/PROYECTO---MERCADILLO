@@ -1,9 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-import fs from "fs";
-import path from "path";
-
-
 
 export async function ListarDatosPrincipal(req, res) {
   try {
@@ -186,21 +182,7 @@ export async function FiltrarCategoriaPrincipal(req, res) {
       });
     });
 
-    // Procesar las imágenes asociadas a cada usuario (ejemplo)
-  /*  for (const usuario of result) {
-      for (const producto of usuario.productos) {
-        const { Imagen, id } = producto; // Suponiendo que Imagen es la imagen en formato binario y 'id' es un identificador único
-        // console.log(producto, " Imagen");
-        if (Imagen) {
-          // Guardar la imagen en un archivo
-
-          fs.writeFileSync(path.join("./dbimagenes/" + id + ".png"), Imagen);
-        }
-      }
-    }*/
-
-    // Leer archivos de imágenes en el directorio
-   // const imgFiles = fs.readdirSync(path.join("./dbimagenes/"));
+   
 
     res.render("main", {
       body: "datosFiltroCategoria",
@@ -277,11 +259,7 @@ export async function MostrarInformacionUsuaro(req, res) {
         // Verificamos si el usuario ya existe en dataUsuario
         if (!data[UserName]) {
           // Si el usuario no existe, lo inicializamos con su información básica y detalles
-          fs.writeFileSync(
-            path.join("./dbimagenes/" + UsuarioId + ".png"),
-            Imagen
-          );
-
+       
           data[UserName] = {
             Imagen: Imagen,
             UserName,

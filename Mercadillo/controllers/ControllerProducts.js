@@ -106,8 +106,7 @@ export async function UpdateProduct(req, res) {
   const data = req.body;
   const id_Categoria = parseInt(req.body.id_Categoria);
   const id_Usuario = parseInt(req.body.id_Usuario);
-  console.log("DATA ", data)
-
+ 
   const Imagen = (!req.file?.path) ? req.body.file  : req.file.path;
   console.log("Esta es la imagen ", Imagen)
   try {
