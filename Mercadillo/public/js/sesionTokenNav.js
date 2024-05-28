@@ -20,7 +20,6 @@ if(!token){
   }else if(tokenPayload.role === 2){
     miEnlaceUsuario.href = "/MercadilloBucaramanga/Admin";
   }
-
 }
 }
 

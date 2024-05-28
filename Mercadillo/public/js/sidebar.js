@@ -33,9 +33,9 @@ function toggleCollapse(index) {
 
         let html = `<ul class="navbar-nav flex-column">
         
-        <a href="/MercadilloBucaramanga" class="btn btn-catalogo-nav d-flex pt-2 justify-content-start ">
+        <h6  class=" navbar-nav btn-catalogo-nav d-flex pt-2 justify-content-start ">
           Catálogos 
-        </a>`;
+        </h6>`;
   
         data.categoriasConCatalogo.forEach((catalogo, index) => {
           html += `

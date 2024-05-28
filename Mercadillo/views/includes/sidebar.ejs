@@ -7,10 +7,10 @@
  <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
   <span class="navbar-toggler-icon"></span>
 </button>
-<a style="margin-right: 57px;"
+<a style="margin-right: 6px; font-weight: bolder;"
 class="navbar-brand"
 href="/MercadilloBucaramanga"
->Logo</a
+>Mercadillo</a
 >
 <div class="collapse navbar-collapse navbar-expand-md  col-md-3 col-lg-2 hamburguesa  w-100" id="navbarNav">
     
@@ -20,20 +20,3 @@ href="/MercadilloBucaramanga"
 </nav>
 
 
-
-<!-- Script para mostrar la imagen seleccionada -->
-<script>
-  function mostrarImagen(event) {
-    const input = event.target;
-    if (input.files && input.files[0]) {
-      const lector = new FileReader();
-
-      lector.onload = function (e) {
-        const vistaPrevia = document.getElementById("vistaPrevia");
-        vistaPrevia.innerHTML = `<img src="${e.target.result}" style="max-width: 300px; max-height: 300px;" />`;
-      };
-
-      lector.readAsDataURL(input.files[0]);
-    }
-  }
-</script>

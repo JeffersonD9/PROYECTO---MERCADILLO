@@ -25,7 +25,6 @@ function activarCampos() {
   correo.disabled = false;
   password.disabled = false;
   btnActualizarCampos.disabled = false;
-
 }
 
 btnActivar.addEventListener("click", (e) => {
@@ -62,7 +61,7 @@ async function actualizar(e) {
         notificacion.classList.remove("alert-danger", "d-none");
         notificacion.classList.add("alert-success", "d-block");
         notificacion.textContent = "Actualizado"; //mostramos en la vista
-        console.log(adminJson.Email,  " aca ")
+     
         correo.value = adminJson.data.Email
         usuario.value = adminJson.data.UserName
         celular.value = adminJson.data.celular
