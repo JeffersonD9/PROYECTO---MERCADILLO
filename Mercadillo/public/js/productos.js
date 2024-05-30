@@ -416,7 +416,7 @@ async function eliminarCatalogo() {
     );
 
     if (!producto.ok) {
-        throw new Error("El cátalogo no se puede eliminar");
+        throw new Error("El Producto no se puede eliminar");
     }
     const data = await producto.json();
 

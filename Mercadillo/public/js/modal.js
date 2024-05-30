@@ -13,7 +13,7 @@ export function activarModalCrear() {
 
 export function activarModalEliminar(nombre) {
   modalEliminar.show();
-  eliminarModalLabel.textContent = `Esta seguro de Eliminar la categoria ${nombre}`;
+  eliminarModalLabel.textContent = `Esta seguro de Eliminar ${nombre}`;
 }
 
 export function desactivarModalCrear() {
