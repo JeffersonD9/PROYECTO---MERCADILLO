@@ -90,7 +90,7 @@ export async function ActualizarAdmin(req, res) {
     const passwordHash = await bcrypt.hash(Password,10)
     const actualizarAdmin= await prisma.admin.update({
       where: { id: id_adminbody },
-      data: {Email:"Email",
+      data: {Email,
       Password:passwordHash,
       celular,
       UserName

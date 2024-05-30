@@ -19,8 +19,6 @@ export async function ListarDatosPrincipal(req, res) {
       // Si es la primera vez que encontramos este usuario, inicializamos su entrada en el objeto
      
        if (!dataCatalogo[UserName]) {
-        //fs.writeFileSync(path.join("./dbimagenes/" + id + ".png"), Imagen);
-       // const imgUsuario = fs.readdirSync(path.join("./dbimagenes/"));
         dataCatalogo[UserName] = {
           catalogos: [],
           Imagen,
@@ -36,11 +34,7 @@ export async function ListarDatosPrincipal(req, res) {
      
     });
    
-
-
-    //console.log(dataCatalogo);
-   
-    return res.render("main", { body: "index", dataCatalogo, UserName:req.user});
+    return res.render("main", { body: "catalogosRegistrados", dataCatalogo, UserName:req.user});
     
   } catch (error) {
     console.error("Error al obtener los productos:", error);
@@ -191,7 +185,6 @@ export async function FiltrarCategoriaPrincipal(req, res) {
       UserName: req.user 
     });
 
-    console.log(result)
   } catch (error) {
     console.log(error);
   }
@@ -316,4 +309,36 @@ export async function MostrarInformacionUsuaro(req, res) {
   } catch (error) {
     console.log(error);
   }
+}
+
+
+
+
+//Nuevo
+export async function MostrarProductos(req, res){
+
+try {
+  
+  const productos = await prisma.usuario.findMany({
+    include: {
+      productos: {
+        include: {
+          categorias: true, // Incluir la información de categorías relacionadas con los productos
+        },
+      },
+    },
+  });
+  
+  console.log(productos);
+
+return res.render("main", { body: "mostrarProductos", productos, UserName:req.user, titulo:"Productos"});
+
+
+} catch (error) {
+  console.log(error)
+}
+
+
+
+
 }

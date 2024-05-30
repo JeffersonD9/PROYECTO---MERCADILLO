@@ -190,6 +190,7 @@ document.addEventListener("click", (e) => {
       }
     }
     opcion = "actualizar";
+    notificacionLlenarCampos.innerHTML = ``;
     activarModalCrear();
   }
 });
